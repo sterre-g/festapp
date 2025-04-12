@@ -57,8 +57,7 @@ class _FormPageState extends State<FormPage> {
   @override
   Future<void> didChangeDependencies() async {
     if (widget.formLink == null && context.routeData.hasPendingChildren) {
-      widget.formLink =
-          context.routeData.pendingChildren[0].params.getString("formLink");
+      widget.formLink = context.routeData.pendingChildren[0].params.getString("formLink");
     }
 
     await loadData();
@@ -111,8 +110,7 @@ class _FormPageState extends State<FormPage> {
               }
               setState(() {});
             },
-            onCloseSeatReservation:
-            formHolder!.controller!.onCloseSeatReservation!,
+            onCloseSeatReservation: formHolder!.controller!.onCloseSeatReservation!,
           ),
         ),
       ),
@@ -176,7 +174,7 @@ class _FormPageState extends State<FormPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor.withOpacity(0.7), // Primary color background
+          color: Theme.of(context).primaryColor.withValues(alpha: 0.7), // Primary color background
           borderRadius: BorderRadius.circular(8.0),
           boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black26)],
         ),
@@ -286,53 +284,47 @@ class _FormPageState extends State<FormPage> {
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: StylesConfig.formMaxWidth),
                 child: Builder(
-                  builder: (scrollContext)
-                  {
+                  builder: (scrollContext) {
                     return SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: _isLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : _formNotAvailable
-                          ? _buildFormNotAvailableMessage()
-                          : (formHolder == null
-                          ? const Center(child: CircularProgressIndicator())
-                          : FormBuilder(
-                        key: _formKey,
-                        child: AutofillGroup(
-                          child: Column(
-                            children: [
-                              if (form!.header != null)
-                                Column(
-                                  children: [
-                                    HtmlView(
-                                        html: form!.header!,
-                                        isSelectable: true),
-                                    const SizedBox(height: 16),
-                                  ],
-                                ),
-                              ...FormHelper.getAllFormFields(
-                                  context, _formKey, formHolder!),
-                              const SizedBox(height: 32),
-                              ButtonsHelper.primaryButton(
-                                context: context,
-                                onPressed: _isLoading
-                                    ? null
-                                    : () => _showOrderPreview(scrollContext),
-                                label: "Continue".tr(),
-                                isLoading: _isLoading,
-                                height: 50.0,
-                                width: 250.0,
-                                isEnabled: _totalPrice > 0,
-                              ),
-                              const SizedBox(height: 32),
-                            ],
-                          ),
-                        ),
-                      )),
-                    ),
-                  );
+                      controller: _scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: _isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : _formNotAvailable
+                                ? _buildFormNotAvailableMessage()
+                                : (formHolder == null
+                                    ? const Center(child: CircularProgressIndicator())
+                                    : FormBuilder(
+                                        key: _formKey,
+                                        child: AutofillGroup(
+                                          child: Column(
+                                            children: [
+                                              if (form!.header != null)
+                                                Column(
+                                                  children: [
+                                                    HtmlView(html: form!.header!, isSelectable: true),
+                                                    const SizedBox(height: 16),
+                                                  ],
+                                                ),
+                                              ...FormHelper.getAllFormFields(context, _formKey, formHolder!),
+                                              const SizedBox(height: 32),
+                                              ButtonsHelper.primaryButton(
+                                                context: context,
+                                                onPressed: _isLoading ? null : () => _showOrderPreview(scrollContext),
+                                                label: "Continue".tr(),
+                                                isLoading: _isLoading,
+                                                height: 50.0,
+                                                width: 250.0,
+                                                isEnabled: _totalPrice > 0,
+                                              ),
+                                              const SizedBox(height: 32),
+                                            ],
+                                          ),
+                                        ),
+                                      )),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -349,9 +341,7 @@ class _FormPageState extends State<FormPage> {
           visible: RightsService.isEditor(),
           child: FloatingActionButton(
             onPressed: () {
-              RouterService.navigate(
-                  context, "${FormPage.ROUTE}/${widget.formLink}/edit")
-                  .then((value) => loadData());
+              RouterService.navigate(context, "${FormPage.ROUTE}/${widget.formLink}/edit").then((value) => loadData());
             },
             child: const Icon(Icons.edit),
           ),
@@ -361,9 +351,7 @@ class _FormPageState extends State<FormPage> {
   }
 
   Widget _buildFormNotAvailableMessage() {
-    String notAvailableText = (form?.headerOff?.isNotEmpty ?? false)
-        ? form!.headerOff!
-        : "Reservation for the selected event is currently unavailable.".tr();
+    String notAvailableText = (form?.headerOff?.isNotEmpty ?? false) ? form!.headerOff! : "Reservation for the selected event is currently unavailable.".tr();
     return Center(
       child: Container(
         padding: const EdgeInsets.all(24.0),
@@ -379,7 +367,7 @@ class _FormPageState extends State<FormPage> {
             const Text(
               "Reservation Unavailable",
               style: TextStyle(
-                fontSize:  24,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -399,10 +387,8 @@ class _FormPageState extends State<FormPage> {
   }
 
   // Function to generate options for a specific item type and add them to the ticket fields
-  Map<String, dynamic> generateOptionsForItemType(
-      List<ProductTypeModel> allItems, String itemType) {
-    var itemTypeModel =
-    allItems.firstWhereOrNull((item) => item.type == itemType);
+  Map<String, dynamic> generateOptionsForItemType(List<ProductTypeModel> allItems, String itemType) {
+    var itemTypeModel = allItems.firstWhereOrNull((item) => item.type == itemType);
 
     if (itemTypeModel == null || itemTypeModel.products == null) {
       return {};

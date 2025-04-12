@@ -23,8 +23,7 @@ class EmailTemplateSettingsPage extends StatefulWidget {
   });
 
   @override
-  _EmailTemplateSettingsPageState createState() =>
-      _EmailTemplateSettingsPageState();
+  _EmailTemplateSettingsPageState createState() => _EmailTemplateSettingsPageState();
 }
 
 class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
@@ -49,12 +48,10 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
       // Set the integer fields from the emailTemplatesResponse if available.
       widget.template.occasion = widget.emailTemplatesResponse.occasion.id;
       widget.template.unit = widget.emailTemplatesResponse.unit.id;
-      widget.template.organization =
-          widget.emailTemplatesResponse.organization.id;
+      widget.template.organization = widget.emailTemplatesResponse.organization.id;
 
       await DbEmailTemplates.updateEmailTemplate(widget.template);
-      ToastHelper.Show(
-          context, "${"Saved".tr()}: ${widget.template.subject ?? ''}");
+      ToastHelper.Show(context, "${"Saved".tr()}: ${widget.template.subject ?? ''}");
       Navigator.of(context).pop();
     }
   }
@@ -77,8 +74,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
     }
 
     try {
-      await DbEmailTemplates.sendCustomEmail(widget.template, subsMap,
-          RightsService.currentUser!.email!);
+      await DbEmailTemplates.sendCustomEmail(widget.template, subsMap, RightsService.currentUser!.email!);
       ToastHelper.Show(context, "Test email sent successfully.".tr());
     } catch (e) {
       ToastHelper.Show(context, "Failed to send test email.".tr());
@@ -116,9 +112,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
         maxLines: 2,
       );
     } else if (subs is Map<String, dynamic>) {
-      final subsText = subs.entries
-          .map((entry) => "${entry.key}: ${entry.value}".tr())
-          .join("\n");
+      final subsText = subs.entries.map((entry) => "${entry.key}: ${entry.value}".tr()).join("\n");
       return SelectableText(
         subsText,
         style: const TextStyle(fontSize: 14),
@@ -138,8 +132,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
           usageDetails['title'] ?? '',
           maxLines: 1,
           style: TextStyle(
-            color: Theme.of(context).appBarTheme.titleTextStyle?.color ??
-                Colors.white,
+            color: Theme.of(context).appBarTheme.titleTextStyle?.color ?? Colors.white,
           ),
         ),
         automaticallyImplyLeading: false,
@@ -156,8 +149,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
           key: _formKey,
           child: Center(
             child: ConstrainedBox(
-              constraints:
-              BoxConstraints(maxWidth: StylesConfig.formMaxWidth),
+              constraints: BoxConstraints(maxWidth: StylesConfig.formMaxWidth),
               child: ListView(
                 shrinkWrap: true,
                 children: [
@@ -169,12 +161,12 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
                         onPressed: _isSendingTestEmail ? null : _sendTestEmail,
                         icon: _isSendingTestEmail
                             ? const SizedBox(
-                          height: 16,
-                          width: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
-                        )
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
                             : const Icon(Icons.send),
                         label: Text("Send Test Email".tr()),
                       ),
@@ -197,9 +189,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
                             usageDetails['title'] ?? '',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 4),
                           Text(
@@ -216,8 +206,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
                             "Available Substitutions:".tr(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 4),
                           _buildSubsDefinition(usageDetails['subs']),
@@ -231,8 +220,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
                     initialValue: _subject,
                     decoration: InputDecoration(labelText: "Subject".tr()),
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                          errorText: "Subject is required".tr()),
+                      FormBuilderValidators.required(errorText: "Subject is required".tr()),
                     ]),
                     onSaved: (val) => _subject = val,
                     style: TextStyle(
@@ -258,11 +246,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Theme.of(context)
-                            .inputDecorationTheme
-                            .labelStyle
-                            ?.color ??
-                            ThemeConfig.grey700(context).withOpacity(0.85),
+                        color: Theme.of(context).inputDecorationTheme.labelStyle?.color ?? ThemeConfig.grey700(context).withValues(alpha: 0.85),
                       ),
                     ),
                   ),
@@ -280,10 +264,7 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
                         onPressed: () async {
                           final result = await RouterService.navigatePageInfo(
                             context,
-                            HtmlEditorRoute(
-                              content: {HtmlEditorPage.parContent: _htmlContent},
-                              occasionId: widget.template.occasion
-                            ),
+                            HtmlEditorRoute(content: {HtmlEditorPage.parContent: _htmlContent}, occasionId: widget.template.occasion),
                           );
                           if (result != null && result is String) {
                             setState(() {
@@ -303,10 +284,8 @@ class _EmailTemplateSettingsPageState extends State<EmailTemplateSettingsPage> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding:
-        const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        color: Theme.of(context).appBarTheme.backgroundColor ??
-            Theme.of(context).primaryColor,
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        color: Theme.of(context).appBarTheme.backgroundColor ?? Theme.of(context).primaryColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

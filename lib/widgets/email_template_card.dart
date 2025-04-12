@@ -8,6 +8,7 @@ import 'package:fstapp/theme_config.dart';
 class EmailTemplateCard extends StatelessWidget {
   final EmailTemplateModel template;
   final VoidCallback onEdit;
+
   /// Additional field to show the context title (occasion/unit/organization).
   final String contextTitle;
 
@@ -61,7 +62,7 @@ class EmailTemplateCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontStyle: FontStyle.italic,
-                        color: ThemeConfig.blackColor(context).withOpacity(0.7),
+                        color: ThemeConfig.blackColor(context).withValues(alpha: 0.7),
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

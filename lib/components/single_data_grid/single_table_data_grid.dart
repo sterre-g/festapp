@@ -11,14 +11,13 @@ import 'single_data_grid_controller.dart';
 class SingleTableDataGrid<T extends ITrinaRowModel> extends StatefulWidget {
   final SingleDataGridController<T> controller;
 
-  const SingleTableDataGrid(this.controller, {Key? key}) : super(key: key);
+  const SingleTableDataGrid(this.controller, {super.key});
 
   @override
   _SingleTableDataGridState<T> createState() => _SingleTableDataGridState<T>();
 }
 
-class _SingleTableDataGridState<T extends ITrinaRowModel>
-    extends State<SingleTableDataGrid<T>> {
+class _SingleTableDataGridState<T extends ITrinaRowModel> extends State<SingleTableDataGrid<T>> {
   bool isLoading = true;
   bool isDataGridLoading = true;
 
@@ -59,9 +58,7 @@ class _SingleTableDataGridState<T extends ITrinaRowModel>
         color: ThemeConfig.whiteColor(widget.controller.context),
       ),
       child: TrinaGrid(
-        noRowsWidget: isDataGridLoading
-            ? null
-            : Center(child: Text("Table does not contain any items").tr()),
+        noRowsWidget: isDataGridLoading ? null : Center(child: Text("Table does not contain any items").tr()),
         columns: widget.controller.columns,
         rows: [],
         onChanged: (TrinaGridOnChangedEvent event) {
@@ -83,20 +80,17 @@ class _SingleTableDataGridState<T extends ITrinaRowModel>
           setState(() {});
         },
         rowColorCallback: (rowContext) {
-          var row = widget.controller.deletedRows.firstWhereOrNull(
-                  (element) => element.key == rowContext.row.key);
+          var row = widget.controller.deletedRows.firstWhereOrNull((element) => element.key == rowContext.row.key);
           if (row != null) {
-            return Colors.redAccent.withOpacity(0.3);
+            return Colors.redAccent.withValues(alpha: 0.3);
           }
-          row = widget.controller.updatedRows.firstWhereOrNull(
-                  (element) => element.key == rowContext.row.key);
+          row = widget.controller.updatedRows.firstWhereOrNull((element) => element.key == rowContext.row.key);
           if (row != null) {
-            return Colors.orangeAccent.withOpacity(0.3);
+            return Colors.orangeAccent.withValues(alpha: 0.3);
           }
-          row = widget.controller.newRows.firstWhereOrNull(
-                  (element) => element.key == rowContext.row.key);
+          row = widget.controller.newRows.firstWhereOrNull((element) => element.key == rowContext.row.key);
           if (row != null) {
-            return Colors.orangeAccent.withOpacity(0.3);
+            return Colors.orangeAccent.withValues(alpha: 0.3);
           }
           return Colors.transparent;
         },

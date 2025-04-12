@@ -72,7 +72,7 @@ class _ScanPageState extends State<ScanPage> {
         dialogTitle: "Enter Scan Code".tr(),
         labelText: "Scan Code".tr(),
       );
-      if (inputScanCode != null && inputScanCode.isNotEmpty) {
+      if (inputScanCode.isNotEmpty) {
         widget.scanCode = inputScanCode;
       }
     }

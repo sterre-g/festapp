@@ -25,9 +25,7 @@ class DataGridHelper
   }) {
     String? textToEdit;
     String? oldText = rendererContext.row.cells[field]?.value;
-    if (oldText != null) {
-      textToEdit = oldText;
-    }
+    textToEdit = oldText;
 
     return ElevatedButton(
       onPressed: () async {

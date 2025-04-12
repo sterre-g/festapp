@@ -46,15 +46,10 @@ class OccasionDetailDialog extends StatelessWidget {
       FeatureConstants.form,
       features: occasion.features,
     );
-    final reserveTitle = formDetails is FormFeature
-        ? formDetails.reserveButtonTitle ?? "Reserve a spot".tr()
-        : "Reserve a spot".tr();
+    final reserveTitle = formDetails is FormFeature ? formDetails.reserveButtonTitle ?? "Reserve a spot".tr() : "Reserve a spot".tr();
     final unifiedButtonStyle = OutlinedButton.styleFrom(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      textStyle: Theme.of(context)
-          .textTheme
-          .labelLarge
-          ?.copyWith(fontSize: 16),
+      textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 16),
       side: BorderSide(
         color: ThemeConfig.blackColor(context),
         width: 1.0,
@@ -67,7 +62,7 @@ class OccasionDetailDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
         side: BorderSide(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
         ),
       ),
       child: ConstrainedBox(
@@ -84,10 +79,7 @@ class OccasionDetailDialog extends StatelessWidget {
                     const SizedBox(height: 32), // Space for close button
                     SelectableText(
                       occasion.title ?? '',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 8),
                     SelectableText(
@@ -97,14 +89,14 @@ class OccasionDetailDialog extends StatelessWidget {
                         occasion.endTime!,
                       ),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).hintColor,
-                      ),
+                            color: Theme.of(context).hintColor,
+                          ),
                     ),
                     const SizedBox(height: 16),
                     Divider(
                       height: 1,
                       thickness: 0.5,
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withValues(alpha: 0.3),
                     ),
                     const SizedBox(height: 16),
                     Padding(
@@ -133,8 +125,7 @@ class OccasionDetailDialog extends StatelessWidget {
                           Expanded(
                             child: OutlinedButton(
                               onPressed: () async {
-                                await RightsService.updateOccasionData(
-                                    occasion.link!);
+                                await RightsService.updateOccasionData(occasion.link!);
                                 await RouterService.navigateOccasion(context, "");
                               },
                               style: unifiedButtonStyle,
@@ -168,7 +159,7 @@ class OccasionDetailDialog extends StatelessWidget {
                   icon: Icon(
                     Icons.close,
                     size: 24,
-                    color: ThemeConfig.blackColor(context).withOpacity(0.8),
+                    color: ThemeConfig.blackColor(context).withValues(alpha: 0.8),
                   ),
                   splashRadius: 20,
                   onPressed: () => Navigator.of(context).pop(),

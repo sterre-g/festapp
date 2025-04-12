@@ -13,14 +13,10 @@ class SeatWidgetHelper {
     required SeatState state,
     double size = 40.0,
   }) {
-    final bool hasPadding = state == SeatState.ordered ||
-        state == SeatState.selected ||
-        state == SeatState.selected_by_me ||
-        state == SeatState.used ||
-        state == SeatState.available;
+    final bool hasPadding = state == SeatState.ordered || state == SeatState.selected || state == SeatState.selected_by_me || state == SeatState.used || state == SeatState.available;
 
     return Container(
-      color: hasPadding ? Colors.black.withOpacity(0) : getSeatColor(SeatState.empty),
+      color: hasPadding ? Colors.black.withValues(alpha: 0) : getSeatColor(SeatState.empty),
       height: size,
       width: size,
       child: Container(
@@ -31,12 +27,12 @@ class SeatWidgetHelper {
         ),
         child: state == SeatState.selected_by_me
             ? Center(
-          child: Icon(
-            Icons.check,
-            size: size * 0.7,
-            color: Colors.white,
-          ),
-        )
+                child: Icon(
+                  Icons.check,
+                  size: size * 0.7,
+                  color: Colors.white,
+                ),
+              )
             : null,
       ),
     );
@@ -58,10 +54,9 @@ class SeatWidgetHelper {
       case SeatState.ordered:
         return Colors.black26;
       case SeatState.empty:
-        return Colors.black.withOpacity(0);
+        return Colors.black.withValues(alpha: 0);
       default:
-        return Colors.black.withOpacity(0);
+        return Colors.black.withValues(alpha: 0);
     }
   }
 }
-

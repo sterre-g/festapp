@@ -19,7 +19,7 @@ class StandardDialog extends StatelessWidget {
       elevation: 16,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
-        side: BorderSide(color: Colors.white.withOpacity(0.2)),
+        side: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxWidth, minHeight: 120),
@@ -35,7 +35,7 @@ class StandardDialog extends StatelessWidget {
                   icon: Icon(
                     Icons.close,
                     size: 24,
-                    color: Theme.of(context).iconTheme.color?.withOpacity(0.8),
+                    color: Theme.of(context).iconTheme.color?.withValues(alpha: 0.8),
                   ),
                   splashRadius: 20,
                   onPressed: onClose ?? () => Navigator.of(context).pop(),

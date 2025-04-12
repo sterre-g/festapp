@@ -42,18 +42,17 @@ class _OccasionCardState extends State<OccasionCard> {
   Widget build(BuildContext context) {
     final Border? border = widget.isPresent
         ? Border.all(
-      color: Theme.of(context).primaryColor,
-      width: OccasionCard.kPresentBorderWidth,
-    )
+            color: Theme.of(context).primaryColor,
+            width: OccasionCard.kPresentBorderWidth,
+          )
         : null;
 
-    final double innerRadius = widget.isPresent
-        ? OccasionCard.kCardBorderRadius - OccasionCard.kPresentBorderWidth
-        : OccasionCard.kCardBorderRadius;
+    final double innerRadius = widget.isPresent ? OccasionCard.kCardBorderRadius - OccasionCard.kPresentBorderWidth : OccasionCard.kCardBorderRadius;
 
     // Retrieve external price from the 'form' feature, if available.
     var details = FeatureService.getFeatureDetails(
-      FeatureConstants.form, features: widget.occasion.features,
+      FeatureConstants.form,
+      features: widget.occasion.features,
     );
     String? externalPrice = details is FormFeature ? details.formExternalPrice : null;
 
@@ -61,10 +60,8 @@ class _OccasionCardState extends State<OccasionCard> {
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: LayoutBuilder(builder: (context, constraints) {
-        final double widthScale =
-        (constraints.maxWidth / OccasionCard.kMinCardWidth).clamp(1.0, 1.5);
-        final double heightScale =
-        (constraints.maxHeight / OccasionCard.kMinCardHeight).clamp(1.0, 1.2);
+        final double widthScale = (constraints.maxWidth / OccasionCard.kMinCardWidth).clamp(1.0, 1.5);
+        final double heightScale = (constraints.maxHeight / OccasionCard.kMinCardHeight).clamp(1.0, 1.2);
         final double buttonScale = (widthScale + heightScale) / 2;
 
         return ConstrainedBox(
@@ -80,7 +77,7 @@ class _OccasionCardState extends State<OccasionCard> {
               boxShadow: [
                 if (widget.isPresent)
                   BoxShadow(
-                    color: Theme.of(context).primaryColor.withOpacity(0.6),
+                    color: Theme.of(context).primaryColor.withValues(alpha: 0.6),
                     blurRadius: 20,
                     spreadRadius: 4,
                   ),
@@ -105,11 +102,11 @@ class _OccasionCardState extends State<OccasionCard> {
                   if (widget.isPast)
                     Positioned.fill(
                       child: Container(
-                        color: Colors.grey.withOpacity(0.6),
+                        color: Colors.grey.withValues(alpha: 0.6),
                       ),
                     ),
                   // Display external price badge at top right if available.
-                  if (externalPrice != null && externalPrice.trim().isNotEmpty)
+                  if (externalPrice.trim().isNotEmpty)
                     Positioned(
                       top: 8,
                       right: 8,
@@ -117,10 +114,9 @@ class _OccasionCardState extends State<OccasionCard> {
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.6),
+                              color: Colors.black.withValues(alpha: 0.6),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: SelectableText(
@@ -144,7 +140,7 @@ class _OccasionCardState extends State<OccasionCard> {
                         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                         child: Container(
                           padding: const EdgeInsets.all(8.0),
-                          color: Colors.black.withOpacity(0.4),
+                          color: Colors.black.withValues(alpha: 0.4),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
@@ -180,20 +176,17 @@ class _OccasionCardState extends State<OccasionCard> {
                     right: 10 * buttonScale,
                     child: OutlinedButton(
                       onPressed: () async {
-                        if (!FeatureService.isFeatureEnabled(
-                            FeatureConstants.form,
-                            features: widget.occasion.features)) {
-                          try{
+                        if (!FeatureService.isFeatureEnabled(FeatureConstants.form, features: widget.occasion.features)) {
+                          try {
                             await RightsService.updateOccasionData(widget.occasion.link!);
-                          } catch(e) {
+                          } catch (e) {
                             // empty
                           }
                           await RouterService.navigateOccasion(context, "");
                         } else {
                           showDialog(
                             context: context,
-                            builder: (context) =>
-                                OccasionDetailDialog(occasion: widget.occasion),
+                            builder: (context) => OccasionDetailDialog(occasion: widget.occasion),
                           );
                         }
                       },

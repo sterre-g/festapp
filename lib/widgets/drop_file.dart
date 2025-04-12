@@ -39,9 +39,9 @@ class _DropFileState extends State<DropFile> {
         for (final droppedFile in detail.files) {
           debugPrint(
             '  ${droppedFile.path} ${droppedFile.name} '
-                '  ${await droppedFile.lastModified()} '
-                '  ${await droppedFile.length()} '
-                '  ${droppedFile.mimeType}',
+            '  ${await droppedFile.lastModified()} '
+            '  ${await droppedFile.length()} '
+            '  ${droppedFile.mimeType}',
           );
         }
       },
@@ -68,9 +68,7 @@ class _DropFileState extends State<DropFile> {
         margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: _dragging
-              ? Colors.blue.withOpacity(0.2)
-              : ThemeConfig.grey200(context),
+          color: _dragging ? Colors.blue.withValues(alpha: 0.2) : ThemeConfig.grey200(context),
           border: Border.all(
             color: _dragging ? Colors.blue : ThemeConfig.grey380(context),
             width: 2,
@@ -79,63 +77,57 @@ class _DropFileState extends State<DropFile> {
         child: Center(
           child: file == null
               ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.cloud_upload,
-                size: 50,
-                color: _dragging
-                    ? Colors.blue
-                    : ThemeConfig.grey600(context),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                "Drop file here".tr(),
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: _dragging
-                      ? Colors.blue
-                      : ThemeConfig.grey600(context),
-                ),
-              ),
-              if (widget.hint != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    widget.hint!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: _dragging
-                          ? Colors.blue
-                          : ThemeConfig.grey600(context),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.cloud_upload,
+                      size: 50,
+                      color: _dragging ? Colors.blue : ThemeConfig.grey600(context),
                     ),
-                  ),
-                ),
-            ],
-          )
+                    const SizedBox(height: 12),
+                    Text(
+                      "Drop file here".tr(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: _dragging ? Colors.blue : ThemeConfig.grey600(context),
+                      ),
+                    ),
+                    if (widget.hint != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          widget.hint!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: _dragging ? Colors.blue : ThemeConfig.grey600(context),
+                          ),
+                        ),
+                      ),
+                  ],
+                )
               : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.insert_drive_file,
-                size: 50,
-                color: Colors.green,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                file!.name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: ThemeConfig.grey800(context),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.insert_drive_file,
+                      size: 50,
+                      color: Colors.green,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      file!.name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: ThemeConfig.grey800(context),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       ),
     );

@@ -116,7 +116,7 @@ class _InstallPageState extends State<InstallPage> {
                       const SizedBox(width: 22),
                       Expanded(
                         child: Text(
-                          "Install {title} to get notifications, offline functionality, and a quick launch icon.".tr(namedArgs: {"title":AppConfig.appName}),
+                          "Install {title} to get notifications, offline functionality, and a quick launch icon.".tr(namedArgs: {"title": AppConfig.appName}),
                           style: TextStyle(
                             fontSize: 16,
                             color: ThemeConfig.blackColor(context),
@@ -160,14 +160,14 @@ class _InstallPageState extends State<InstallPage> {
   }
 
   Widget buildInstallSection(
-      BuildContext context,
-      String title,
-      IconData icon,
-      String link,
-      int index, {
-        bool isApple = false,
-        String? notice,
-      }) {
+    BuildContext context,
+    String title,
+    IconData icon,
+    String link,
+    int index, {
+    bool isApple = false,
+    String? notice,
+  }) {
     return ExpansionTile(
       controller: _controllers[index],
       initiallyExpanded: platform == "ios" && index == 0 || platform == "android" && index == 1 || platform == "web" && index == 2,
@@ -189,7 +189,7 @@ class _InstallPageState extends State<InstallPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
               notice,
-              style: TextStyle(color: ThemeConfig.blackColor(context).withOpacity(0.8)),
+              style: TextStyle(color: ThemeConfig.blackColor(context).withValues(alpha: 0.8)),
             ).tr(),
           ),
           const SizedBox(height: 10),
@@ -201,7 +201,11 @@ class _InstallPageState extends State<InstallPage> {
               ButtonsHelper.bigButton(
                 context: context,
                 label: isApple ? "Download App".tr() : "Install Now".tr(),
-                onPressed: isApple ? () => InstallPage.jsInterop.openLinkInNewTab(link) : _canInstallPWA ? handleInstallButtonPress : null,
+                onPressed: isApple
+                    ? () => InstallPage.jsInterop.openLinkInNewTab(link)
+                    : _canInstallPWA
+                        ? handleInstallButtonPress
+                        : null,
                 color: isApple || _canInstallPWA ? ThemeConfig.seed1 : Colors.grey,
                 textColor: Colors.white,
               ),

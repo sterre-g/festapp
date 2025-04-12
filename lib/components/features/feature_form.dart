@@ -558,28 +558,26 @@ class _FeatureFormState extends State<FeatureForm> {
               lastDate: DateTime(2100),
               locale: context.locale,
             );
-            if (date != null) {
-              TimeOfDay? time = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay.fromDateTime(initialLocal),
+            TimeOfDay? time = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.fromDateTime(initialLocal),
+            );
+            if (time != null) {
+              final selectedLocal = DateTime(
+                date.year,
+                date.month,
+                date.day,
+                time.hour,
+                time.minute,
               );
-              if (time != null) {
-                final selectedLocal = DateTime(
-                  date.year,
-                  date.month,
-                  date.day,
-                  time.hour,
-                  time.minute,
-                );
-                final dateFormat = DateFormat.yMd(context.locale.toString()).add_jm();
-                final formattedTime = dateFormat.format(selectedLocal);
-                print('Selected time: $formattedTime');  // Debug print
-                setState(() {
-                  startTimeController!.text = formattedTime;
-                });
-              }
+              final dateFormat = DateFormat.yMd(context.locale.toString()).add_jm();
+              final formattedTime = dateFormat.format(selectedLocal);
+              print('Selected time: $formattedTime');  // Debug print
+              setState(() {
+                startTimeController!.text = formattedTime;
+              });
             }
-          },
+                    },
           onSaved: (val) {
             if (val != null && val.isNotEmpty) {
               final dateFormat = DateFormat.yMd(context.locale.toString()).add_jm();

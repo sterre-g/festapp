@@ -29,7 +29,7 @@ class HtmlHelper {
 
     for (var image in images) {
       String? src = image.attributes['src'];
-      if (src != null && (src.startsWith(jpegBase64Prefix) || src.startsWith(pngBase64Prefix))) {
+      if ((src.startsWith(jpegBase64Prefix) || src.startsWith(pngBase64Prefix))) {
         String base64Data = src.contains(jpegBase64Prefix)
             ? src.replaceFirst(jpegBase64Prefix, '')
             : src.replaceFirst(pngBase64Prefix, '');
@@ -219,7 +219,7 @@ class HtmlHelper {
     List<Element> newImages = newDocument.getElementsByTagName('img');
     for (var image in newImages) {
       String? src = image.attributes['src'];
-      if (src == null || src.isEmpty) continue;
+      if (src.isEmpty) continue;
 
       bool isBase64 = src.startsWith(jpegBase64Prefix) || src.startsWith(pngBase64Prefix);
 

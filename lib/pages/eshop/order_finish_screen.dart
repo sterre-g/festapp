@@ -8,17 +8,16 @@ class FinishOrderScreen extends StatefulWidget {
   final VoidCallback onResetForm;
 
   const FinishOrderScreen({
-    Key? key,
+    super.key,
     required this.orderFutureFunction,
     required this.onResetForm,
-  }) : super(key: key);
+  });
 
   @override
   _FinishOrderScreenState createState() => _FinishOrderScreenState();
 }
 
-class _FinishOrderScreenState extends State<FinishOrderScreen>
-    with TickerProviderStateMixin {
+class _FinishOrderScreenState extends State<FinishOrderScreen> with TickerProviderStateMixin {
   bool _isSuccess = false;
   bool _isLoading = true;
   int? code;
@@ -50,9 +49,7 @@ class _FinishOrderScreenState extends State<FinishOrderScreen>
     try {
       final result = await widget.orderFutureFunction();
       final elapsed = DateTime.now().difference(start).inMilliseconds;
-      code = int.tryParse(
-          result.data["code"].toString().replaceAll(RegExp(r'\D'), '')) ??
-          0;
+      code = int.tryParse(result.data["code"].toString().replaceAll(RegExp(r'\D'), '')) ?? 0;
       _isSuccess = code == 200;
       if (code == 1017) _errorProduct = result.data["product"];
       if (_isSuccess && elapsed < 1000) {
@@ -96,8 +93,7 @@ class _FinishOrderScreenState extends State<FinishOrderScreen>
         child: Container(
           width: 100,
           height: 100,
-          decoration:
-          BoxDecoration(shape: BoxShape.circle, color: Colors.grey[300]),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey[300]),
           child: Center(
             child: CircularProgressIndicator(
               color: Theme.of(context).primaryColor,
@@ -116,13 +112,11 @@ class _FinishOrderScreenState extends State<FinishOrderScreen>
       subtitle = "Payment information has been sent to your email.".tr();
     } else if (code == 1017) {
       final prodTitle = _errorProduct?["title"] ?? "";
-      title = "The {product_title} is no longer available for order."
-          .tr(namedArgs: {"product_title": prodTitle});
+      title = "The {product_title} is no longer available for order.".tr(namedArgs: {"product_title": prodTitle});
       subtitle = "Please choose a different variant.".tr();
     } else {
       title = "Order Failed".tr();
-      subtitle = "{code}: An error occurred while processing your order."
-          .tr(namedArgs: {"code": (code ?? 0).toString()});
+      subtitle = "{code}: An error occurred while processing your order.".tr(namedArgs: {"code": (code ?? 0).toString()});
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -134,9 +128,7 @@ class _FinishOrderScreenState extends State<FinishOrderScreen>
             height: 150,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: _isSuccess
-                  ? ThemeConfig.greenColor()
-                  : ThemeConfig.redColor(context),
+              color: _isSuccess ? ThemeConfig.greenColor() : ThemeConfig.redColor(context),
             ),
             child: Icon(
               _isSuccess ? Icons.check_circle : Icons.error,
@@ -151,9 +143,7 @@ class _FinishOrderScreenState extends State<FinishOrderScreen>
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: _isSuccess
-                ? ThemeConfig.greenColor()
-                : ThemeConfig.redColor(context),
+            color: _isSuccess ? ThemeConfig.greenColor() : ThemeConfig.redColor(context),
           ),
           textAlign: TextAlign.center,
         ),
@@ -162,7 +152,7 @@ class _FinishOrderScreenState extends State<FinishOrderScreen>
           subtitle,
           style: TextStyle(
             fontSize: 14,
-            color: ThemeConfig.blackColor(context).withOpacity(0.7),
+            color: ThemeConfig.blackColor(context).withValues(alpha: 0.7),
           ),
           textAlign: TextAlign.center,
         ),
@@ -173,8 +163,7 @@ class _FinishOrderScreenState extends State<FinishOrderScreen>
             Navigator.of(context).pop();
           },
           style: OutlinedButton.styleFrom(
-            padding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),

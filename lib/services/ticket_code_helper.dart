@@ -28,10 +28,6 @@ class TicketCodeHelper {
       String formLink) async {
 
     String? getCode = await DbTickets.getScanCode(formLink);
-    if(getCode == null){
-      getCode = generateRandomCode(5);
-      await DbTickets.updateScanCode(formLink, getCode);
-    }
     String generatedCode = getCode;
     bool result = false;
     String linkBase = "${AppConfig.webLink}/#/${ScanPage.ROUTE}/";

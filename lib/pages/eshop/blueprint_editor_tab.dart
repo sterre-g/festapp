@@ -22,7 +22,6 @@ import '../../components/seat_reservation/utils/seat_state.dart';
 import '../../components/seat_reservation/widgets/seat_layout_widget.dart';
 
 class BlueprintTab extends StatefulWidget {
-
   const BlueprintTab({super.key});
 
   @override
@@ -36,8 +35,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
 
   List<SeatModel> allBoxes = [];
   selectionMode currentSelectionMode = selectionMode.none;
-  final AutoResizeInteractiveViewerController seatLayoutController =
-  AutoResizeInteractiveViewerController();
+  final AutoResizeInteractiveViewerController seatLayoutController = AutoResizeInteractiveViewerController();
 
   @override
   void didChangeDependencies() {
@@ -129,18 +127,18 @@ class _BlueprintTabState extends State<BlueprintTab> {
           child: blueprint == null
               ? const Center(child: CircularProgressIndicator())
               : SeatLayoutWidget(
-            isEditorMode: true,
-            controller: seatLayoutController,
-            onSeatTap: handleSeatTap,
-            stateModel: SeatLayoutStateModel(
-              rows: blueprint!.configuration!.height!,
-              cols: blueprint!.configuration!.width!,
-              seatSize: SeatReservationWidget.boxSize,
-              currentObjects: blueprint!.objects!,
-              allBoxes: allBoxes,
-              backgroundSvg: blueprint!.backgroundSvg,
-            ),
-          ),
+                  isEditorMode: true,
+                  controller: seatLayoutController,
+                  onSeatTap: handleSeatTap,
+                  stateModel: SeatLayoutStateModel(
+                    rows: blueprint!.configuration!.height!,
+                    cols: blueprint!.configuration!.width!,
+                    seatSize: SeatReservationWidget.boxSize,
+                    currentObjects: blueprint!.objects!,
+                    allBoxes: allBoxes,
+                    backgroundSvg: blueprint!.backgroundSvg,
+                  ),
+                ),
         ),
         const SizedBox(height: 16),
       ],
@@ -204,101 +202,87 @@ class _BlueprintTabState extends State<BlueprintTab> {
     return blueprint == null
         ? const Center(child: CircularProgressIndicator())
         : Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Groups (Tables):",
-              style: Theme.of(context).textTheme.titleMedium,
-            ).tr(),
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  tooltip: "Add new".tr(),
-                  onPressed: RightsService.canEditOccasion() ? addGroup : null,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  tooltip: "Delete".tr(),
-                  onPressed: RightsService.canEditOccasion() ? deleteGroup : null,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  tooltip: "Rename".tr(),
-                  onPressed: RightsService.canEditOccasion() ? renameGroup : null,
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Expanded(
-          child: ListView.builder(
-            itemCount: blueprint!.groups!.length,
-            itemBuilder: (context, index) {
-              final group = blueprint!.groups![index];
-              final isSelected = currentGroup == group;
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    currentGroup = group;
-                  });
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 8, horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? Theme.of(context)
-                        .colorScheme
-                        .primary
-                        .withOpacity(0.2)
-                        : Colors.transparent,
-                    border: Border.all(
-                      color: isSelected
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.grey,
-                      width: isSelected ? 2 : 1,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Groups (Tables):",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ).tr(),
+                  Row(
                     children: [
-                      Text(
-                        group.title!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(
-                          color: isSelected
-                              ? Theme.of(context).colorScheme.primary
-                              : null,
-                          fontWeight:
-                          isSelected ? FontWeight.bold : null,
-                        ),
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        tooltip: "Add new".tr(),
+                        onPressed: RightsService.canEditOccasion() ? addGroup : null,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "(${group.objects.length})",
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        tooltip: "Delete".tr(),
+                        onPressed: RightsService.canEditOccasion() ? deleteGroup : null,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        tooltip: "Rename".tr(),
+                        onPressed: RightsService.canEditOccasion() ? renameGroup : null,
                       ),
                     ],
                   ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: blueprint!.groups!.length,
+                  itemBuilder: (context, index) {
+                    final group = blueprint!.groups![index];
+                    final isSelected = currentGroup == group;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          currentGroup = group;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: isSelected ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.2) : Colors.transparent,
+                          border: Border.all(
+                            color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey,
+                            width: isSelected ? 2 : 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              group.title!,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: isSelected ? Theme.of(context).colorScheme.primary : null,
+                                    fontWeight: isSelected ? FontWeight.bold : null,
+                                  ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "(${group.objects.length})",
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
+              ),
+            ],
+          );
   }
 
   void addGroup() async {
@@ -341,7 +325,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
     if (newTitle != null && newTitle.isNotEmpty) {
       setState(() {
         currentGroup!.title = newTitle;
-        blueprint!.groups!.sort((a,b) => Utilities.naturalCompare(a.title!, b.title!));
+        blueprint!.groups!.sort((a, b) => Utilities.naturalCompare(a.title!, b.title!));
       });
     }
   }
@@ -407,8 +391,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
     );
   }
 
-  Widget buildLegendItem(String label, SeatState state,
-      {bool isActive = false, VoidCallback? onTap, bool grayedOut = false}) {
+  Widget buildLegendItem(String label, SeatState state, {bool isActive = false, VoidCallback? onTap, bool grayedOut = false}) {
     return MouseRegion(
       cursor: grayedOut ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
       child: GestureDetector(
@@ -418,9 +401,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(
-                color: isActive
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.transparent, // Highlight active items
+                color: isActive ? Theme.of(context).colorScheme.primary : Colors.transparent, // Highlight active items
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(4),
@@ -455,7 +436,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
         buildDimensionEditor(
           "Width".tr(),
           blueprint!.configuration!.width!,
-              (value) {
+          (value) {
             setState(() {
               blueprint!.configuration!.width = value;
             });
@@ -466,7 +447,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
         buildDimensionEditor(
           "Height".tr(),
           blueprint!.configuration!.height!,
-              (value) {
+          (value) {
             setState(() {
               blueprint!.configuration!.height = value;
             });
@@ -596,7 +577,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
         _handleEmptyArea(model);
         break;
       default:
-      // Do nothing for other cases
+        // Do nothing for other cases
         break;
     }
     setState(() {});
@@ -622,7 +603,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
 
   /// Handle adding an available (spot) seat.
   void _handleAddAvailable(SeatModel model) {
-    if(currentGroup == null){
+    if (currentGroup == null) {
       ToastHelper.Show(context, "First, select or create a group to add a spot (on the right).".tr(), severity: ToastSeverity.NotOk);
       return;
     }
@@ -640,7 +621,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
     // Create or update the object model
     model.objectModel = model.objectModel ?? BlueprintObjectModel(x: model.colI, y: model.rowI);
     model.objectModel!.type = BlueprintModel.metaSpotType;
-    model.objectModel!.product = blueprint!.products?.firstWhereOrNull((p)=>p.productTypeString == ProductModel.spotType);
+    model.objectModel!.product = blueprint!.products?.firstWhereOrNull((p) => p.productTypeString == ProductModel.spotType);
     model.objectModel!.group = currentGroup;
     model.objectModel!.title = currentGroup?.getNextBoxName();
 
@@ -676,7 +657,7 @@ class _BlueprintTabState extends State<BlueprintTab> {
 
   void saveChanges() async {
     var success = await DbForms.updateBlueprint(context, blueprint!);
-    if(success){
+    if (success) {
       ToastHelper.Show(context, "Saved".tr());
       await loadData();
     }

@@ -17,7 +17,7 @@ class OccasionEditCard extends StatelessWidget {
   final bool isPresent;
 
   const OccasionEditCard({
-    Key? key,
+    super.key,
     required this.occasion,
     required this.onView,
     required this.onSettings,
@@ -25,14 +25,12 @@ class OccasionEditCard extends StatelessWidget {
     required this.onReservation,
     required this.onCreateCopy,
     this.isPresent = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     // For present events, add a thicker border.
-    final borderSide = isPresent
-        ? BorderSide(color: Theme.of(context).primaryColor, width: 4)
-        : BorderSide.none;
+    final borderSide = isPresent ? BorderSide(color: Theme.of(context).primaryColor, width: 4) : BorderSide.none;
     return LayoutBuilder(
       builder: (context, constraints) {
         return ConstrainedBox(
@@ -67,7 +65,7 @@ class OccasionEditCard extends StatelessWidget {
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                       child: Container(
-                        color: Colors.black.withOpacity(0.4),
+                        color: Colors.black.withValues(alpha: 0.4),
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

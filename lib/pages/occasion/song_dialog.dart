@@ -35,8 +35,7 @@ class _SongDialogState extends State<SongDialog> {
 
   BuildContext? themedContext;
 
-  double buttonVisibleOpacity(BuildContext context) =>
-      ThemeConfig.isDarkMode(context) ? 1 : 0.9;
+  double buttonVisibleOpacity(BuildContext context) => ThemeConfig.isDarkMode(context) ? 1 : 0.9;
   static const double buttonHiddenOpacity = 0.4;
   static const int buttonFadeAnimationDuration = 400;
 
@@ -80,9 +79,7 @@ class _SongDialogState extends State<SongDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final themeData = widget.isDarkMode
-        ? ThemeConfig.darkTheme(ThemeConfig.baseTheme())
-        : ThemeConfig.baseTheme();
+    final themeData = widget.isDarkMode ? ThemeConfig.darkTheme(ThemeConfig.baseTheme()) : ThemeConfig.baseTheme();
 
     return Theme(
       data: themeData,
@@ -108,8 +105,7 @@ class _SongDialogState extends State<SongDialog> {
                           padding: const EdgeInsets.all(12),
                           alignment: Alignment.topCenter,
                           child: HtmlView(
-                            html:
-                            "<div style='text-align: center;'><h3>${widget.title}</h3>${widget.description}</div>",
+                            html: "<div style='text-align: center;'><h3>${widget.title}</h3>${widget.description}</div>",
                             isSelectable: true,
                             fontSize: fontSize,
                           ),
@@ -134,19 +130,15 @@ class _SongDialogState extends State<SongDialog> {
                             },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              backgroundColor: ThemeConfig.songButtonColor(context)
-                                  .withOpacity(_buttonOpacity),
+                              backgroundColor: ThemeConfig.songButtonColor(context).withValues(alpha: _buttonOpacity),
                               shadowColor: Colors.transparent,
                               elevation: 0,
                             ),
                             child: Row(
                               children: [
-                                Icon(Icons.remove,
-                                    size: 28, color: ThemeConfig.whiteTextColor(context)),
+                                Icon(Icons.remove, size: 28, color: ThemeConfig.whiteTextColor(context)),
                                 const SizedBox(width: 8),
-                                Text("Smaller".tr(),
-                                    style: TextStyle(
-                                        color: ThemeConfig.whiteTextColor(context), fontSize: 18)),
+                                Text("Smaller".tr(), style: TextStyle(color: ThemeConfig.whiteTextColor(context), fontSize: 18)),
                               ],
                             ),
                           ),
@@ -160,19 +152,15 @@ class _SongDialogState extends State<SongDialog> {
                             },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              backgroundColor: ThemeConfig.songButtonColor(context)
-                                  .withOpacity(_buttonOpacity),
+                              backgroundColor: ThemeConfig.songButtonColor(context).withValues(alpha: _buttonOpacity),
                               shadowColor: Colors.transparent,
                               elevation: 0,
                             ),
                             child: Row(
                               children: [
-                                Text("Larger".tr(),
-                                    style: TextStyle(
-                                        color: ThemeConfig.whiteTextColor(context), fontSize: 18)),
+                                Text("Larger".tr(), style: TextStyle(color: ThemeConfig.whiteTextColor(context), fontSize: 18)),
                                 const SizedBox(width: 8),
-                                Icon(Icons.add,
-                                    size: 28, color: ThemeConfig.whiteTextColor(context)),
+                                Icon(Icons.add, size: 28, color: ThemeConfig.whiteTextColor(context)),
                               ],
                             ),
                           ),
@@ -194,13 +182,11 @@ class _SongDialogState extends State<SongDialog> {
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           padding: const EdgeInsets.all(16),
-                          backgroundColor: ThemeConfig.songButtonColor(context)
-                              .withOpacity(_buttonOpacity),
+                          backgroundColor: ThemeConfig.songButtonColor(context).withValues(alpha: _buttonOpacity),
                           shadowColor: Colors.transparent,
                           elevation: 0,
                         ),
-                        child: Icon(Icons.adaptive.arrow_back,
-                            color: ThemeConfig.whiteTextColor(context)),
+                        child: Icon(Icons.adaptive.arrow_back, color: ThemeConfig.whiteTextColor(context)),
                       ),
                     ),
                   ),
