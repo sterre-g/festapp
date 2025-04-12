@@ -106,7 +106,7 @@ class _OccasionCardState extends State<OccasionCard> {
                       ),
                     ),
                   // Display external price badge at top right if available.
-                  if (externalPrice.trim().isNotEmpty)
+                  if (externalPrice?.trim().isNotEmpty == true)
                     Positioned(
                       top: 8,
                       right: 8,
@@ -119,8 +119,9 @@ class _OccasionCardState extends State<OccasionCard> {
                               color: Colors.black.withValues(alpha: 0.6),
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: SelectableText(
-                              externalPrice,
+                            child:
+                            SelectableText(
+                              externalPrice ?? '',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

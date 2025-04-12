@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fstapp/app_config.dart';
-import 'package:fstapp/data_services_eshop/db_eshop.dart';
 import 'package:fstapp/data_services_eshop/db_tickets.dart';
 import 'package:fstapp/pages/occasion/scan_page.dart';
 import 'package:fstapp/services/dialog_helper.dart';
@@ -17,18 +16,19 @@ class TicketCodeHelper {
     return String.fromCharCodes(
       Iterable.generate(
         length,
-            (_) => chars.codeUnitAt(rnd.nextInt(chars.length)),
+        (_) => chars.codeUnitAt(rnd.nextInt(chars.length)),
       ),
     );
   }
 
-  static Future<bool> showScanTicketCode(
-      BuildContext context,
-      String titleMessage,
-      String formLink) async {
-
+  static Future<bool> showScanTicketCode(BuildContext context, String titleMessage, String formLink) async {
     String? getCode = await DbTickets.getScanCode(formLink);
+    if (getCode == null || getCode.isEmpty) {
+      getCode = generateRandomCode(5);
+      await DbTickets.updateScanCode(formLink, getCode);
+    }
     String generatedCode = getCode;
+
     bool result = false;
     String linkBase = "${AppConfig.webLink}/#/${ScanPage.ROUTE}/";
     String fullLink = linkBase + generatedCode;
@@ -42,11 +42,7 @@ class TicketCodeHelper {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             Future<void> handleGenerateCode() async {
-              bool confirm = await DialogHelper.showConfirmationDialogAsync(
-                  context,
-                  titleMessage,
-                  "By generating a new code, the old one will be replaced and will no longer work.".tr()
-              );
+              bool confirm = await DialogHelper.showConfirmationDialogAsync(context, titleMessage, "By generating a new code, the old one will be replaced and will no longer work.".tr());
               if (confirm) {
                 String newCode = generateRandomCode(5);
                 await DbTickets.updateScanCode(formLink, newCode);
@@ -105,9 +101,7 @@ class TicketCodeHelper {
                           IconButton(
                             icon: Icon(Icons.copy),
                             tooltip: 'Copy Link'.tr(),
-                            onPressed: fullLink.isNotEmpty
-                                ? handleCopyLink
-                                : null,
+                            onPressed: fullLink.isNotEmpty ? handleCopyLink : null,
                           ),
                         ],
                       ),
@@ -116,18 +110,14 @@ class TicketCodeHelper {
                         children: [
                           Expanded(
                             child: SelectableText(
-                              generatedCode.isNotEmpty
-                                  ? '$generatedCode'
-                                  : '',
+                              generatedCode.isNotEmpty ? generatedCode : '',
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
                           IconButton(
                             icon: Icon(Icons.copy),
                             tooltip: 'Copy'.tr(),
-                            onPressed: generatedCode.isNotEmpty
-                                ? handleCopyCode
-                                : null,
+                            onPressed: generatedCode.isNotEmpty ? handleCopyCode : null,
                           ),
                         ],
                       ),

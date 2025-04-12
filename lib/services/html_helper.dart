@@ -29,10 +29,9 @@ class HtmlHelper {
 
     for (var image in images) {
       String? src = image.attributes['src'];
+      if (src == null || src.isEmpty) continue;
       if ((src.startsWith(jpegBase64Prefix) || src.startsWith(pngBase64Prefix))) {
-        String base64Data = src.contains(jpegBase64Prefix)
-            ? src.replaceFirst(jpegBase64Prefix, '')
-            : src.replaceFirst(pngBase64Prefix, '');
+        String base64Data = src.contains(jpegBase64Prefix) ? src.replaceFirst(jpegBase64Prefix, '') : src.replaceFirst(pngBase64Prefix, '');
 
         // Calculate the approximate size of the base64 data in bytes
         int base64Length = base64Data.length;
@@ -58,15 +57,12 @@ class HtmlHelper {
     return imagesToProcess;
   }
 
-  static Future<String> compressImage(
-      String htmlText, String imageSrc, void Function() onImageProcessed) async {
+  static Future<String> compressImage(String htmlText, String imageSrc, void Function() onImageProcessed) async {
     final document = html_parser.parse(htmlText);
     final image = document.querySelector('img[src="$imageSrc"]');
 
     if (image != null) {
-      String base64Data = imageSrc.contains(jpegBase64Prefix)
-          ? imageSrc.replaceFirst(jpegBase64Prefix, '')
-          : imageSrc.replaceFirst(pngBase64Prefix, '');
+      String base64Data = imageSrc.contains(jpegBase64Prefix) ? imageSrc.replaceFirst(jpegBase64Prefix, '') : imageSrc.replaceFirst(pngBase64Prefix, '');
 
       Uint8List imageData = base64.decode(base64Data);
 
@@ -121,12 +117,12 @@ class HtmlHelper {
       var hrefValue = matchedText;
 
       if (hrefPrefix.isEmpty && matchedText.startsWith('www.')) {
-        hrefValue = 'https://$matchedText';  // Add https:// to href only
+        hrefValue = 'https://$matchedText'; // Add https:// to href only
       }
 
       final anchor = Element.tag('a')
         ..attributes['href'] = '$hrefPrefix$hrefValue'
-        ..text = matchedText;  // Keep the original text
+        ..text = matchedText; // Keep the original text
       newNodes.add(anchor);
 
       lastIndex = match.end;
@@ -182,35 +178,25 @@ class HtmlHelper {
   }
 
   static String stripHtml(String htmlText) {
-    return htmlText.replaceAll(
-        RegExp(r'<(?!img\b)[^>]*>', caseSensitive: false),
-        ''
-    );
+    return htmlText.replaceAll(RegExp(r'<(?!img\b)[^>]*>', caseSensitive: false), '');
   }
 
   static bool isHtmlEmptyOrNull(String? htmlText) {
-    if(htmlText == null) {
+    if (htmlText == null) {
       return true;
     }
 
-    return htmlText.replaceAll(
-        RegExp(r'<(?!img\b)[^>]*>', caseSensitive: false),
-        ''
-    ).trim().isEmpty;
+    return htmlText.replaceAll(RegExp(r'<(?!img\b)[^>]*>', caseSensitive: false), '').trim().isEmpty;
   }
 
-  static Future<String> storeImagesToOccasion(
-      String oldHtml,
-      String newHtml,
-      int occasionId,
-      { int maxWidth = AppConfig.imagesMaxWidth,
-        int maxBytes = AppConfig.imagesMaxBytes }) async {
+  static Future<String> storeImagesToOccasion(String oldHtml, String newHtml, int occasionId, {int maxWidth = AppConfig.imagesMaxWidth, int maxBytes = AppConfig.imagesMaxBytes}) async {
     // Parse the old and new HTML documents.
     final oldDocument = html_parser.parse(oldHtml);
     final newDocument = html_parser.parse(newHtml);
 
     // Collect image src values from the old HTML.
-    List<String> oldImageUrls = oldDocument.getElementsByTagName('img')
+    List<String> oldImageUrls = oldDocument
+        .getElementsByTagName('img')
         .map((img) => img.attributes['src'] ?? '')
         .where((src) => src.isNotEmpty && !(src.startsWith(jpegBase64Prefix) || src.startsWith(pngBase64Prefix)))
         .toList();
@@ -219,7 +205,7 @@ class HtmlHelper {
     List<Element> newImages = newDocument.getElementsByTagName('img');
     for (var image in newImages) {
       String? src = image.attributes['src'];
-      if (src.isEmpty) continue;
+      if (src == null || src.isEmpty) continue;
 
       bool isBase64 = src.startsWith(jpegBase64Prefix) || src.startsWith(pngBase64Prefix);
 
@@ -233,9 +219,7 @@ class HtmlHelper {
       Uint8List imageData;
       if (isBase64) {
         // Decode the base64 image data.
-        String base64Data = src.contains(jpegBase64Prefix)
-            ? src.replaceFirst(jpegBase64Prefix, '')
-            : src.replaceFirst(pngBase64Prefix, '');
+        String base64Data = src.contains(jpegBase64Prefix) ? src.replaceFirst(jpegBase64Prefix, '') : src.replaceFirst(pngBase64Prefix, '');
         imageData = base64.decode(base64Data);
       } else {
         // For linked images, fetch the image data from the URL.
@@ -283,10 +267,7 @@ class HtmlHelper {
     }
 
     // Collect image src values from the new HTML after processing.
-    List<String> newImageUrls = newDocument.getElementsByTagName('img')
-        .map((img) => img.attributes['src'] ?? '')
-        .where((src) => src.isNotEmpty)
-        .toList();
+    List<String> newImageUrls = newDocument.getElementsByTagName('img').map((img) => img.attributes['src'] ?? '').where((src) => src.isNotEmpty).toList();
 
     // Determine which images have been removed (present in old HTML but not in new HTML).
     List<String> removedImages = oldImageUrls.where((oldUrl) => !newImageUrls.contains(oldUrl)).toList();

@@ -105,12 +105,9 @@ class _FeatureFormState extends State<FeatureForm> {
       // Offline Map Layer URL is kept hidden.
 
       // Offline Map Layer extra field controllers
-      mapOfflineMapPackageURLController =
-          TextEditingController(text: mapFeature.offlineMapLayer.offlineMapPackageURL);
-      mapOfflineMapStyleURLController =
-          TextEditingController(text: mapFeature.offlineMapLayer.offlineMapStyleURL);
-      mapOfflineMapLayerNameController =
-          TextEditingController(text: mapFeature.offlineMapLayer.offlineMapLayerName);
+      mapOfflineMapPackageURLController = TextEditingController(text: mapFeature.offlineMapLayer.offlineMapPackageURL);
+      mapOfflineMapStyleURLController = TextEditingController(text: mapFeature.offlineMapLayer.offlineMapStyleURL);
+      mapOfflineMapLayerNameController = TextEditingController(text: mapFeature.offlineMapLayer.offlineMapLayerName);
       autoDownloadOfflineMap = mapFeature.offlineMapLayer.autoDownloadOfflineMap;
     } else if (widget.feature is WorkshopsFeature) {
       // Initialize with an empty string. The formatted value will be set in didChangeDependencies.
@@ -486,8 +483,7 @@ class _FeatureFormState extends State<FeatureForm> {
                     final package = mapOfflineMapPackageURLController?.text.trim() ?? "";
                     final style = mapOfflineMapStyleURLController?.text.trim() ?? "";
                     final layer = mapOfflineMapLayerNameController?.text.trim() ?? "";
-                    if ((package.isNotEmpty || style.isNotEmpty || layer.isNotEmpty) &&
-                        (package.isEmpty || style.isEmpty || layer.isEmpty)) {
+                    if ((package.isNotEmpty || style.isNotEmpty || layer.isNotEmpty) && (package.isEmpty || style.isEmpty || layer.isEmpty)) {
                       return "Fill all offline fields or leave all empty.".tr();
                     }
                     if (autoDownloadOfflineMap && package.isEmpty) {
@@ -505,8 +501,7 @@ class _FeatureFormState extends State<FeatureForm> {
                     final package = mapOfflineMapPackageURLController?.text.trim() ?? "";
                     final style = mapOfflineMapStyleURLController?.text.trim() ?? "";
                     final layer = mapOfflineMapLayerNameController?.text.trim() ?? "";
-                    if ((package.isNotEmpty || style.isNotEmpty || layer.isNotEmpty) &&
-                        (package.isEmpty || style.isEmpty || layer.isEmpty)) {
+                    if ((package.isNotEmpty || style.isNotEmpty || layer.isNotEmpty) && (package.isEmpty || style.isEmpty || layer.isEmpty)) {
                       return "Fill all offline fields or leave all empty.".tr();
                     }
                     if (autoDownloadOfflineMap && style.isEmpty) {
@@ -524,8 +519,7 @@ class _FeatureFormState extends State<FeatureForm> {
                     final package = mapOfflineMapPackageURLController?.text.trim() ?? "";
                     final style = mapOfflineMapStyleURLController?.text.trim() ?? "";
                     final layer = mapOfflineMapLayerNameController?.text.trim() ?? "";
-                    if ((package.isNotEmpty || style.isNotEmpty || layer.isNotEmpty) &&
-                        (package.isEmpty || style.isEmpty || layer.isEmpty)) {
+                    if ((package.isNotEmpty || style.isNotEmpty || layer.isNotEmpty) && (package.isEmpty || style.isEmpty || layer.isEmpty)) {
                       return "Fill all offline fields or leave all empty.".tr();
                     }
                     if (autoDownloadOfflineMap && layer.isEmpty) {
@@ -562,7 +556,7 @@ class _FeatureFormState extends State<FeatureForm> {
               context: context,
               initialTime: TimeOfDay.fromDateTime(initialLocal),
             );
-            if (time != null) {
+            if (time != null && date != null) {
               final selectedLocal = DateTime(
                 date.year,
                 date.month,
@@ -572,12 +566,12 @@ class _FeatureFormState extends State<FeatureForm> {
               );
               final dateFormat = DateFormat.yMd(context.locale.toString()).add_jm();
               final formattedTime = dateFormat.format(selectedLocal);
-              print('Selected time: $formattedTime');  // Debug print
+              print('Selected time: $formattedTime'); // Debug print
               setState(() {
                 startTimeController!.text = formattedTime;
               });
             }
-                    },
+          },
           onSaved: (val) {
             if (val != null && val.isNotEmpty) {
               final dateFormat = DateFormat.yMd(context.locale.toString()).add_jm();

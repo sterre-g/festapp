@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:fstapp/router_service.dart';
 import 'package:fstapp/data_models_eshop/order_model.dart';
 import 'package:fstapp/data_models_eshop/ticket_model.dart';
-import 'package:fstapp/data_services_eshop/db_eshop.dart';
 import 'package:fstapp/data_models/event_model.dart';
 import 'package:fstapp/data_services_eshop/db_tickets.dart';
 import 'package:fstapp/services/dialog_helper.dart';
@@ -56,8 +55,7 @@ class _ScanPageState extends State<ScanPage> {
     }
 
     if (kIsWeb) {
-      MobileScannerPlatform.instance.setBarcodeLibraryScriptUrl(
-          "https://unpkg.com/@zxing/library@0.21.3");
+      MobileScannerPlatform.instance.setBarcodeLibraryScriptUrl("https://unpkg.com/@zxing/library@0.21.3");
     }
     print(widget.scanCode);
 
@@ -66,13 +64,13 @@ class _ScanPageState extends State<ScanPage> {
 
   Future<void> checkForCode() async {
     await Future.delayed(Duration(milliseconds: 500));
-    if(widget.scanCode == null) {
+    if (widget.scanCode == null) {
       String? inputScanCode = await DialogHelper.showInputDialog(
         context: context,
         dialogTitle: "Enter Scan Code".tr(),
         labelText: "Scan Code".tr(),
       );
-      if (inputScanCode.isNotEmpty) {
+      if (inputScanCode != null && inputScanCode.isNotEmpty) {
         widget.scanCode = inputScanCode;
       }
     }
@@ -83,9 +81,7 @@ class _ScanPageState extends State<ScanPage> {
       return Center(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 24, 0, 12),
-          child: const Text(
-              "Point the camera at the attendee's code for an entry verification.")
-              .tr(),
+          child: const Text("Point the camera at the attendee's code for an entry verification.").tr(),
         ),
       );
     }
@@ -111,21 +107,20 @@ class _ScanPageState extends State<ScanPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Display related products in separate rows
-                if (_scannedObject!.relatedProducts != null &&
-                    _scannedObject!.relatedProducts!.isNotEmpty)
+                if (_scannedObject!.relatedProducts != null && _scannedObject!.relatedProducts!.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: _scannedObject!.relatedProducts!
                         .map((product) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2.0),
-                      child: Text(
-                        product.toBasicString(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ))
+                              padding: const EdgeInsets.symmetric(vertical: 2.0),
+                              child: Text(
+                                product.toBasicString(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ))
                         .toList(),
                   ),
                 const SizedBox(height: 8),
@@ -160,9 +155,7 @@ class _ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _scannedObject == null
-          ? ThemeConfig.grey200(context)
-          : getResultColor(_scanState),
+      backgroundColor: _scannedObject == null ? ThemeConfig.grey200(context) : getResultColor(_scanState),
       body: SafeArea(
         child: Stack(
           children: [
@@ -229,22 +222,17 @@ class _ScanPageState extends State<ScanPage> {
     rightNowScanned = scannedId;
 
     _scannedObject = await DbTickets.scanTicket(scannedId, widget.scanCode!);
-    if (_scannedObject != null &&
-        (_scannedObject!.state == OrderModel.sentState ||
-            _scannedObject!.state == OrderModel.paidState)) {
+    if (_scannedObject != null && (_scannedObject!.state == OrderModel.sentState || _scannedObject!.state == OrderModel.paidState)) {
       _scanState = ScanState.valid;
       VibrateService.vibrateOk();
       setState(() {});
       return;
-    } else if (_scannedObject != null &&
-        (_scannedObject!.state == OrderModel.stornoState ||
-            _scannedObject!.state == OrderModel.orderedState)) {
+    } else if (_scannedObject != null && (_scannedObject!.state == OrderModel.stornoState || _scannedObject!.state == OrderModel.orderedState)) {
       _scanState = ScanState.invalid;
       VibrateService.vibrateNotOk();
       setState(() {});
       return;
-    } else if (_scannedObject != null &&
-        (_scannedObject!.state == OrderModel.usedState)) {
+    } else if (_scannedObject != null && (_scannedObject!.state == OrderModel.usedState)) {
       _scanState = ScanState.used;
       VibrateService.vibrateNotOk();
       setState(() {});
@@ -258,8 +246,7 @@ class _ScanPageState extends State<ScanPage> {
   Future<void> _confirmTicket() async {
     if (_scannedObject == null) return;
 
-    bool success = await DbTickets.updateTicketToUsed(
-        _scannedObject!.id!, widget.scanCode!);
+    bool success = await DbTickets.updateTicketToUsed(_scannedObject!.id!, widget.scanCode!);
 
     if (success) {
       // Update the ticket state to 'used'
@@ -288,6 +275,5 @@ class _ScanPageState extends State<ScanPage> {
       case ScanState.nothing:
         return ThemeConfig.backgroundColor(context);
     }
-    return Colors.redAccent;
   }
 }

@@ -158,12 +158,11 @@ class _EventPageState extends State<EventPage> {
                                             _queriedParticipants =
                                                 await DbUsers
                                                     .getAllUsersBasics();
-                                            _queriedParticipants
-                                                .forEach((q) {
+                                            for (var q in _queriedParticipants) {
                                                       if (_participants.any(
                                                           (p) => p.id == q.id))
-                                                        {q.isSignedIn = true};
-                                                    });
+                                                        {q.isSignedIn = true;}
+                                                    }
 
                                             // ignore: use_build_context_synchronously
                                             DialogHelper.chooseUser(context,
