@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
@@ -119,7 +120,7 @@ class OfflineMapHelper {
       var vectorTileTheme = jsonDecode(fileContent) as Map<String, dynamic>;
       return ThemeReader().read(vectorTileTheme);
     } catch (e) {
-      print("Error loading offline map style: $e");
+      debugPrint("Error loading offline map style: $e");
       return null;
     }
   }

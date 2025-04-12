@@ -566,7 +566,7 @@ class _FeatureFormState extends State<FeatureForm> {
               );
               final dateFormat = DateFormat.yMd(context.locale.toString()).add_jm();
               final formattedTime = dateFormat.format(selectedLocal);
-              print('Selected time: $formattedTime'); // Debug print
+              debugPrint('Selected time: $formattedTime'); // Debug print
               setState(() {
                 startTimeController!.text = formattedTime;
               });

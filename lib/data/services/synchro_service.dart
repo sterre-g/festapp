@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fstapp/app_config.dart';
 import 'package:fstapp/data/models/occasion_link_model.dart';
 import 'package:fstapp/data/models/occasion_settings_model.dart';
@@ -66,8 +67,8 @@ class SynchroService {
   }
 
   static Future<OccasionLinkModel> getAppConfig({String? occasionLink, String? formLink}) async {
-    print(occasionLink);
-    print(formLink);
+    debugPrint(occasionLink);
+    debugPrint(formLink);
 
     var data = await _supabase.rpc("get_app_config_v2",
         params: {"data_in": {
@@ -76,7 +77,7 @@ class SynchroService {
           "organization": AppConfig.organization,
           "platform": await PlatformHelper.getPlatform()
         }});
-    print(data);
+    debugPrint(data);
 
     return OccasionLinkModel.fromJson(data);
   }

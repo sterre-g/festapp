@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fstapp/router_service.dart';
 import 'package:fstapp/app_config.dart';
 import 'package:fstapp/data/models/occasion_model.dart';
@@ -30,7 +31,7 @@ class RightsService{
       var occasionLink = link ?? RouterService.currentOccasionLink;
       if (occasionLink.isEmpty) {
         model = LinkModel.extractOccasionLink(Uri.base.toString());
-        print(Uri.base.toString());
+        debugPrint(Uri.base.toString());
       }
 
       if(AppConfig.forceOccasionLink != null) {

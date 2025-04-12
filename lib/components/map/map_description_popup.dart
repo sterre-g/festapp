@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fstapp/data/services/auth_service.dart';
 import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/components/map/map_marker_with_text.dart';
-import 'package:fstapp/widgets/html_editor_widget.dart';
 import 'package:fstapp/widgets/html_view.dart';
 
 class MapDescriptionPopup extends StatefulWidget {

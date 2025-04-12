@@ -26,8 +26,7 @@ Future<void> main() async {
   await initializeEverything();
   runApp(
     EasyLocalization(
-        supportedLocales:
-        AppConfig.availableLanguages().map((e) => e.locale).toList(),
+        supportedLocales: AppConfig.availableLanguages().map((e) => e.locale).toList(),
         path: "assets/translations",
         fallbackLocale: AppConfig.availableLanguages().map((e) => e.locale).first,
         useOnlyLangCode: true,
@@ -37,30 +36,30 @@ Future<void> main() async {
 }
 
 Future<void> initializeEverything() async {
-  print('Initialization started');
+  debugPrint('Initialization started');
   //GoRouter.optionURLReflectsImperativeAPIs = true;
   WidgetsFlutterBinding.ensureInitialized();
-  print('Widgets binding initialized');
+  debugPrint('Widgets binding initialized');
 
   try {
     PWAInstall().setup();
-    print('PWA setup completed');
+    debugPrint('PWA setup completed');
   } catch (e) {
-    print('PWA setup failed: $e');
+    debugPrint('PWA setup failed: $e');
   }
 
   try {
     await initializeDateFormatting();
-    print('Date formatting initialized');
+    debugPrint('Date formatting initialized');
   } catch (e) {
-    print('Date formatting initialization failed: $e');
+    debugPrint('Date formatting initialization failed: $e');
   }
 
   try {
     await EasyLocalization.ensureInitialized();
-    print('EasyLocalization initialized');
+    debugPrint('EasyLocalization initialized');
   } catch (e) {
-    print('EasyLocalization initialization failed: $e');
+    debugPrint('EasyLocalization initialization failed: $e');
   }
 
   try {
@@ -68,44 +67,48 @@ Future<void> initializeEverything() async {
       url: AppConfig.supabaseUrl,
       anonKey: AppConfig.anonKey,
     ).timeout(const Duration(seconds: 2));
-    print('Supabase initialized');
+    debugPrint('Supabase initialized');
     if (!AuthService.isLoggedIn()) {
       await AuthService.refreshSession().timeout(const Duration(seconds: 2));
-      print('Session refreshed');
+      debugPrint('Session refreshed');
     }
   } catch (e) {
-    print('Supabase initialization failed: $e');
+    debugPrint('Supabase initialization failed: $e');
   }
 
   try {
     var settings = await OfflineDataService.getGlobalSettings();
     if (settings != null) {
       SynchroService.globalSettingsModel = settings;
-      print('Global settings loaded');
+      debugPrint('Global settings loaded');
     }
   } catch (e) {
-    print('Offline data helper initialization failed: $e');
+    debugPrint('Offline data helper initialization failed: $e');
   }
 
   try {
     await RightsService.updateOccasionData();
-    print('Occasion loaded');
+    debugPrint('Occasion loaded');
   } catch (e) {
-    print('Occasion loading failed: $e');
+    debugPrint('Occasion loading failed: $e');
     RightsService.useOfflineVersion = true;
   }
 
-  print('Notification helper initializing');
+  debugPrint('Notification helper initializing');
 
-  NotificationHelper.initialize().then(
-          (f){ print('Notification helper initialized'); },
-          onError: (e){ print('Notification helper initialization failed: $e'); });
+  NotificationHelper.initialize().then((f) {
+    debugPrint('Notification helper initialized');
+  }, onError: (e) {
+    debugPrint('Notification helper initialization failed: $e');
+  });
 
-  print('Initialization completed');
+  debugPrint('Initialization completed');
 }
 
 class MyApp extends StatefulWidget {
   bool isTimeTravelVisible = false;
+
+  MyApp({super.key});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -158,8 +161,8 @@ class _MyAppState extends State<MyApp> {
         theme: theme,
         darkTheme: darkTheme,
       ).animate().fadeIn(
-        duration: 300.ms,
-      ),
+            duration: 300.ms,
+          ),
     );
   }
 }

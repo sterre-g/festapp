@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:fstapp/app_config.dart';
 import 'package:fstapp/data/models/occasion_model.dart';
 import 'package:fstapp/data/models/occasion_user_model.dart';
@@ -103,7 +104,7 @@ class DbUsers {
     if (result != null && result["code"] == 200) {
       return UnitModel.fromJson(result["data"]);
     } else if (result != null && result["code"] == 403) {
-      print("User is not authorized or found (admin rights required)");
+      debugPrint("User is not authorized or found (admin rights required)");
     }
 
     // Return null if no organization data is found or unauthorized

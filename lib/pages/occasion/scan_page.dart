@@ -57,7 +57,7 @@ class _ScanPageState extends State<ScanPage> {
     if (kIsWeb) {
       MobileScannerPlatform.instance.setBarcodeLibraryScriptUrl("https://unpkg.com/@zxing/library@0.21.3");
     }
-    print(widget.scanCode);
+    debugPrint(widget.scanCode);
 
     checkForCode();
   }

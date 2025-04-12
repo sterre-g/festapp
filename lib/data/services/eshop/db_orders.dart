@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fstapp/components/blueprint/blueprint_helper.dart';
 import 'package:fstapp/data/models/eshop/order_model.dart';
 import 'package:fstapp/data/models/eshop/order_product_ticket_model.dart';
@@ -189,7 +190,7 @@ class DbOrders {
 
       return response;
     } catch (e) {
-      print("Unexpected error in sendTicketsToEmail: $e");
+      debugPrint("Unexpected error in sendTicketsToEmail: $e");
       rethrow;
     }
   }

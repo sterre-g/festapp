@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fstapp/app_config.dart';
 import 'package:fstapp/data/services/db_images.dart';
@@ -289,11 +290,11 @@ class HtmlHelper {
         if (base64String is String) {
           return base64.decode(base64String);
         } else {
-          print("Error: Data is not a string.");
+          debugPrint("Error: Data is not a string.");
           return null;
         }
       } else {
-        print("Error: No data returned from supabase function.");
+        debugPrint("Error: No data returned from supabase function.");
         return null;
       }
     }
@@ -304,11 +305,11 @@ class HtmlHelper {
       if (response.statusCode == 200) {
         return response.bodyBytes;
       } else {
-        print('Error fetching image: ${response.statusCode}');
+        debugPrint('Error fetching image: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching image: $e');
+      debugPrint('Error fetching image: $e');
       return null;
     } finally {
       client.close();

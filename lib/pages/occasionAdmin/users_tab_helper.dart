@@ -167,10 +167,10 @@ class UsersTabHelper {
                       }),
                   severity: ToastSeverity.NotOk,
                 );
-                print(
+                debugPrint(
                     "Failed to invite user: ${user.data![Tb.occasion_users.data_email]}. Error: $e");
               } else {
-                print(
+                debugPrint(
                     "Retrying to invite user: ${user.data![Tb.occasion_users.data_email]}. Attempt: ${retryAttempts[user]}");
               }
               await Future.delayed(Duration(milliseconds: 500));

@@ -9,9 +9,7 @@ import 'package:fstapp/components/seat_reservation/model/seat_model.dart';
 import 'package:fstapp/data/models/form_model.dart';
 import 'package:fstapp/data/models/form_option_model.dart';
 import 'package:fstapp/data/models/form_option_product_model.dart';
-import 'package:fstapp/components/blueprint/blueprint_object_model.dart';
 import 'package:fstapp/data/models/eshop/product_type_model.dart';
-import 'package:fstapp/data/services/eshop/db_eshop.dart';
 import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/data/services/eshop/db_forms.dart';
 import 'package:fstapp/data/services/eshop/db_orders.dart';
@@ -453,7 +451,7 @@ class _FormPageState extends State<FormPage> {
       });
     } catch (e) {
       // Handle any unexpected errors
-      print("Error loading form: $e");
+      debugPrint("Error loading form: $e");
       setState(() {
         _isLoading = false;
         _formNotAvailable = true;
