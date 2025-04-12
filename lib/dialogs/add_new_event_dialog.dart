@@ -1,11 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_models/event_model.dart';
-import 'package:fstapp/data_models/place_model.dart';
-import 'package:fstapp/data_services/db_events.dart';
-import 'package:fstapp/data_services/db_places.dart';
-import 'package:fstapp/data_services/synchro_service.dart';
+import 'package:fstapp/data/models/event_model.dart';
+import 'package:fstapp/data/models/place_model.dart';
+import 'package:fstapp/data/services/db_events.dart';
+import 'package:fstapp/data/services/db_places.dart';
+import 'package:fstapp/data/services/synchro_service.dart';
 import 'package:fstapp/theme_config.dart';
 import 'package:fstapp/widgets/mouse_detector.dart';
 import 'package:fstapp/widgets/time_data_range_picker.dart';

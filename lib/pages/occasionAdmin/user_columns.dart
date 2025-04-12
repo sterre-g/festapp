@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/components/single_data_grid/data_grid_helper.dart';
-import 'package:fstapp/data_models/service_item_model.dart';
-import 'package:fstapp/data_models/tb.dart';
-import 'package:fstapp/data_models/user_info_model.dart';
-import 'package:fstapp/data_services/db_occasions.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/models/service_item_model.dart';
+import 'package:fstapp/data/models/tb.dart';
+import 'package:fstapp/data/models/user_info_model.dart';
+import 'package:fstapp/data/services/db_occasions.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class UserColumns {

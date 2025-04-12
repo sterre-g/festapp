@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/app_config.dart';
-import 'package:fstapp/data_models/event_model.dart';
-import 'package:fstapp/data_models/place_model.dart';
+import 'package:fstapp/data/models/event_model.dart';
+import 'package:fstapp/data/models/place_model.dart';
 import 'package:fstapp/services/time_helper.dart';
 
 class TimeBlockHelper {

@@ -1,7 +1,7 @@
-import 'package:fstapp/data_services/auth_service.dart';
-import 'package:fstapp/data_models/occasion_user_model.dart';
-import 'package:fstapp/data_services/db_users.dart';
-import 'package:fstapp/data_services/synchro_service.dart';
+import 'package:fstapp/data/services/auth_service.dart';
+import 'package:fstapp/data/models/occasion_user_model.dart';
+import 'package:fstapp/data/services/db_users.dart';
+import 'package:fstapp/data/services/synchro_service.dart';
 
 class DataServiceTests {
   static Future<void> test_check_occasion_link()

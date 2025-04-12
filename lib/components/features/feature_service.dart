@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 
 import 'feature.dart';
 import 'feature_constants.dart';

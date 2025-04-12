@@ -5,10 +5,10 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:fstapp/app_router.gr.dart';
 import 'package:fstapp/router_service.dart';
 import 'package:fstapp/components/features/feature_metadata.dart';
-import 'package:fstapp/data_models/occasion_model.dart';
-import 'package:fstapp/data_models/tb.dart';
-import 'package:fstapp/data_services/db_occasions.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/models/occasion_model.dart';
+import 'package:fstapp/data/models/tb.dart';
+import 'package:fstapp/data/services/db_occasions.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/components/features/feature_service.dart';
 import 'package:fstapp/pages/utility/html_editor_page.dart';
 import 'package:fstapp/components/features/feature_form.dart';
@@ -21,7 +21,7 @@ import 'package:fstapp/widgets/help_widget.dart';
 import 'package:fstapp/widgets/image_area.dart';
 import 'package:fstapp/widgets/occasion_card.dart';
 import 'package:fstapp/widgets/time_data_range_picker.dart';
-import 'package:fstapp/data_services/db_images.dart';
+import 'package:fstapp/data/services/db_images.dart';
 import 'package:fstapp/widgets/html_view.dart';
 
 class OccasionSettingsPage extends StatefulWidget {

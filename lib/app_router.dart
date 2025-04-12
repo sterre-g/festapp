@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/pages/occasion/check_page.dart';
 import 'package:fstapp/pages/occasion/event_edit_page.dart';
 import 'package:fstapp/pages/occasion/event_page.dart';

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_services/db_images.dart';
+import 'package:fstapp/data/services/db_images.dart';
 import 'package:fstapp/services/dialog_helper.dart';
 import 'package:fstapp/services/toast_helper.dart';
 import 'package:fstapp/widgets/image_area.dart';

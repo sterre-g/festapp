@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_models_eshop/payment_info_model.dart';
-import 'package:fstapp/data_models_eshop/transaction_model.dart';
-import 'package:fstapp/data_services/rights_service.dart';
-import 'package:fstapp/data_services_eshop/db_eshop.dart';
+import 'package:fstapp/data/models/eshop/payment_info_model.dart';
+import 'package:fstapp/data/models/eshop/transaction_model.dart';
+import 'package:fstapp/data/services/rights_service.dart';
+import 'package:fstapp/data/services/eshop/db_eshop.dart';
 import 'package:fstapp/services/dialog_helper.dart';
 import 'package:fstapp/services/toast_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';

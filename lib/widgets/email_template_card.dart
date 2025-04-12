@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_models/email_template_model.dart';
+import 'package:fstapp/data/models/email_template_model.dart';
 import 'package:fstapp/theme_config.dart';
 
 class EmailTemplateCard extends StatelessWidget {

@@ -3,12 +3,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/router_service.dart';
 import 'package:fstapp/components/features/feature.dart';
-import 'package:fstapp/data_models/tb.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/models/tb.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/components/features/feature_constants.dart';
 import 'package:fstapp/components/features/feature_service.dart';
 import 'package:fstapp/services/time_helper.dart';
-import 'package:fstapp/data_models/occasion_model.dart';
+import 'package:fstapp/data/models/occasion_model.dart';
 import 'package:fstapp/dialogs/occasion_detail_dialog.dart';
 
 class OccasionCard extends StatefulWidget {

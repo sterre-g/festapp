@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_models/form_option_model.dart';
-import 'package:fstapp/data_models/form_option_product_model.dart';
+import 'package:fstapp/data/models/form_option_model.dart';
+import 'package:fstapp/data/models/form_option_product_model.dart';
 import 'package:fstapp/pages/form/widgets_view/form_helper.dart';
 import 'package:fstapp/services/html_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';

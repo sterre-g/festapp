@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fstapp/router_service.dart';
-import 'package:fstapp/data_models/language_model.dart';
+import 'package:fstapp/data/models/language_model.dart';
 import 'package:fstapp/services/dialog_helper.dart';
 import 'package:fstapp/services/notification_helper.dart';
 import 'package:fstapp/app_config.dart';

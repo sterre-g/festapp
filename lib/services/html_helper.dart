@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:fstapp/app_config.dart';
-import 'package:fstapp/data_services/db_images.dart';
+import 'package:fstapp/data/services/db_images.dart';
 import 'package:fstapp/services/image_compression_helper.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;

@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:fstapp/components/timeline/schedule_timeline_helper.dart';
-import 'package:fstapp/data_services/db_events.dart';
+import 'package:fstapp/data/services/db_events.dart';
 import 'package:fstapp/services/time_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/components/timetable/timeline_widget.dart';
@@ -471,7 +471,7 @@ class _TimetableState extends State<Timetable> with TickerProviderStateMixin {
     _animationController.reset();
     _animationController.forward();
   }
-  
+
   void onScaleStarted(ScaleStartDetails details) {
     _animationController.stop();
   }

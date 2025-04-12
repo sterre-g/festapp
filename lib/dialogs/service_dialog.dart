@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fstapp/data_models/service_item_model.dart';
-import 'package:fstapp/data_services/db_occasions.dart';
+import 'package:fstapp/data/models/service_item_model.dart';
+import 'package:fstapp/data/services/db_occasions.dart';
 import 'package:fstapp/services/dialog_helper.dart';
 
 class ServiceDialog extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_models/occasion_model.dart';
+import 'package:fstapp/data/models/occasion_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fstapp/app_config.dart';
-import 'package:fstapp/data_models/unit_model.dart';
-import 'package:fstapp/data_services/db_occasions.dart';
+import 'package:fstapp/data/models/unit_model.dart';
+import 'package:fstapp/data/services/db_occasions.dart';
 import 'package:fstapp/services/utilities_all.dart';
 import 'package:fstapp/theme_config.dart';
 import 'package:fstapp/widgets/html_view.dart';

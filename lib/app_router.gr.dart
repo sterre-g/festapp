@@ -12,7 +12,7 @@
 import 'package:auto_route/auto_route.dart' as _i30;
 import 'package:flutter/foundation.dart' as _i32;
 import 'package:flutter/material.dart' as _i31;
-import 'package:fstapp/data_models/place_model.dart' as _i33;
+import 'package:fstapp/data/models/place_model.dart' as _i33;
 import 'package:fstapp/pages/form/pages/form_edit_page.dart' deferred as _i6;
 import 'package:fstapp/pages/form/pages/form_page.dart' deferred as _i7;
 import 'package:fstapp/pages/occasion/check_page.dart' deferred as _i2;

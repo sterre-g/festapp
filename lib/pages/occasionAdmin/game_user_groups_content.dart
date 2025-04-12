@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fstapp/components/single_data_grid/data_grid_helper.dart';
 import 'package:fstapp/components/single_data_grid/single_data_grid_controller.dart';
 import 'package:fstapp/components/single_data_grid/single_table_data_grid.dart';
-import 'package:fstapp/data_models/information_model.dart';
-import 'package:fstapp/data_models/tb.dart';
-import 'package:fstapp/data_models/user_group_info_model.dart';
-import 'package:fstapp/data_models/user_info_model.dart';
-import 'package:fstapp/data_services/db_groups.dart';
-import 'package:fstapp/data_services/db_users.dart';
+import 'package:fstapp/data/models/information_model.dart';
+import 'package:fstapp/data/models/tb.dart';
+import 'package:fstapp/data/models/user_group_info_model.dart';
+import 'package:fstapp/data/models/user_info_model.dart';
+import 'package:fstapp/data/services/db_groups.dart';
+import 'package:fstapp/data/services/db_users.dart';
 import 'package:fstapp/services/dialog_helper.dart';
 import 'package:trina_grid/trina_grid.dart';
 

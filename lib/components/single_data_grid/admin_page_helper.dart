@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/router_service.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/pages/eshop/blueprint_editor_tab.dart';
 import 'package:fstapp/pages/eshop/email_templates_tab.dart';
 import 'package:fstapp/pages/form/pages/form_tab.dart';

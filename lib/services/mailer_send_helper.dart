@@ -1,5 +1,5 @@
-import 'package:fstapp/data_models/user_info_model.dart' as mailer_send_helper;
-import 'package:fstapp/data_services/data_service.dart';
+import 'package:fstapp/data/models/user_info_model.dart' as mailer_send_helper;
+import 'package:fstapp/data/services/data_service.dart';
 import 'package:fstapp/services/toast_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 

@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_models_eshop/transaction_model.dart';
-import 'package:fstapp/data_services_eshop/db_eshop.dart';
+import 'package:fstapp/data/models/eshop/transaction_model.dart';
+import 'package:fstapp/data/services/eshop/db_eshop.dart';
 import 'package:fstapp/services/toast_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';
 import 'package:fstapp/theme_config.dart';

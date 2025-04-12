@@ -2,7 +2,7 @@ import 'dart:async' as notification_helper;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fstapp/data_services/auth_service.dart';
+import 'package:fstapp/data/services/auth_service.dart';
 import 'package:fstapp/pages/occasion/news_page.dart';
 import 'package:fstapp/router_service.dart';
 import 'package:fstapp/services/dialog_helper.dart';

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fstapp/components/single_data_grid/data_grid_helper.dart';
 import 'package:fstapp/components/single_data_grid/single_data_grid_controller.dart';
 import 'package:fstapp/components/single_data_grid/single_table_data_grid.dart';
-import 'package:fstapp/data_models/exclusive_group_model.dart';
-import 'package:fstapp/data_models/tb.dart';
-import 'package:fstapp/data_services/db_events.dart';
+import 'package:fstapp/data/models/exclusive_group_model.dart';
+import 'package:fstapp/data/models/tb.dart';
+import 'package:fstapp/data/services/db_events.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class ExclusivityContent extends StatefulWidget {

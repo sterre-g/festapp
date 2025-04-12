@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fstapp/router_service.dart';
-import 'package:fstapp/data_models/form_field_model.dart';
-import 'package:fstapp/data_models/form_model.dart';
-import 'package:fstapp/data_services/auth_service.dart';
+import 'package:fstapp/data/models/form_field_model.dart';
+import 'package:fstapp/data/models/form_model.dart';
+import 'package:fstapp/data/services/auth_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fstapp/pages/form/models/form_holder.dart';
 import 'package:fstapp/pages/form/widgets_view/form_helper.dart';

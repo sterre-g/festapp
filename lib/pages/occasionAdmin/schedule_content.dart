@@ -2,15 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/components/single_data_grid/data_grid_helper.dart';
 import 'package:fstapp/components/single_data_grid/single_data_grid_controller.dart';
-import 'package:fstapp/data_models/event_model.dart';
+import 'package:fstapp/data/models/event_model.dart';
 import 'package:fstapp/components/single_data_grid/single_table_data_grid.dart';
-import 'package:fstapp/data_models/occasion_model.dart';
-import 'package:fstapp/data_models/place_model.dart';
-import 'package:fstapp/data_models/tb.dart';
-import 'package:fstapp/data_services/db_events.dart';
-import 'package:fstapp/data_services/db_places.dart';
-import 'package:fstapp/data_services/db_users.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/models/occasion_model.dart';
+import 'package:fstapp/data/models/place_model.dart';
+import 'package:fstapp/data/models/tb.dart';
+import 'package:fstapp/data/services/db_events.dart';
+import 'package:fstapp/data/services/db_places.dart';
+import 'package:fstapp/data/services/db_users.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class ScheduleContent extends StatefulWidget {

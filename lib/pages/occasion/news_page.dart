@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:fstapp/app_router.gr.dart';
-import 'package:fstapp/data_models/news_model.dart';
-import 'package:fstapp/data_services/auth_service.dart';
-import 'package:fstapp/data_services/db_news.dart';
-import 'package:fstapp/data_services/offline_data_service.dart';
+import 'package:fstapp/data/models/news_model.dart';
+import 'package:fstapp/data/services/auth_service.dart';
+import 'package:fstapp/data/services/db_news.dart';
+import 'package:fstapp/data/services/offline_data_service.dart';
 import 'package:fstapp/router_service.dart';
-import 'package:fstapp/data_services/rights_service.dart';
+import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/pages/occasion/news_form_page.dart';
 import 'package:fstapp/services/toast_helper.dart';
 import 'package:fstapp/styles/styles_config.dart';

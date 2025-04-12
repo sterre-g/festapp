@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fstapp/data_models/form_field_model.dart';
-import 'package:fstapp/data_models/form_model.dart';
+import 'package:fstapp/data/models/form_field_model.dart';
+import 'package:fstapp/data/models/form_model.dart';
 import 'package:fstapp/services/html_helper.dart';
 import 'package:fstapp/theme_config.dart';
 import 'package:fstapp/widgets/html_view.dart';

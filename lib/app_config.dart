@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/data_models/language_model.dart';
+import 'package:fstapp/data/models/language_model.dart';
 
 class AppConfig {
   static const String supabaseUrl = 'https://kjdpmixlnhntmxjedpxh.supabase.co';

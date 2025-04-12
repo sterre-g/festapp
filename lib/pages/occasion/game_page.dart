@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fstapp/router_service.dart';
-import 'package:fstapp/data_models/information_model.dart';
-import 'package:fstapp/data_models/game_settings_model.dart';
-import 'package:fstapp/data_services/db_information.dart';
-import 'package:fstapp/data_services/db_occasions.dart';
-import 'package:fstapp/data_services/db_groups.dart';
+import 'package:fstapp/data/models/information_model.dart';
+import 'package:fstapp/data/models/game_settings_model.dart';
+import 'package:fstapp/data/services/db_information.dart';
+import 'package:fstapp/data/services/db_occasions.dart';
+import 'package:fstapp/data/services/db_groups.dart';
 import 'package:fstapp/styles/styles_config.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
