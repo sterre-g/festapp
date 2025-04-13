@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fstapp/data/services/eshop/db_eshop.dart';
-import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/styles/styles_config.dart';
 import 'package:auto_route/auto_route.dart';
 

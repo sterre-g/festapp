@@ -12,11 +12,11 @@ class SearchTransactionsScreen extends StatefulWidget {
   final int paymentInfoId;
   final int bankAccount;
 
-  SearchTransactionsScreen({
-    Key? key,
+  const SearchTransactionsScreen({
+    super.key,
     required this.paymentInfoId,
     required this.bankAccount,
-  }) : super(key: key);
+  });
 
   @override
   _SearchTransactionsScreenState createState() => _SearchTransactionsScreenState();

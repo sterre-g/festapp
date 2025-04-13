@@ -27,7 +27,7 @@ class UnitPage extends StatefulWidget {
   static const ROUTE = "unit";
   final int id;
 
-  const UnitPage({@pathParam required this.id, Key? key}) : super(key: key);
+  const UnitPage({@pathParam required this.id, super.key});
 
   @override
   _UnitPageState createState() => _UnitPageState();

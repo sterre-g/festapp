@@ -5,6 +5,7 @@ import 'package:trina_grid/trina_grid.dart';
 
 class ExclusiveGroupModel extends ITrinaRowModel {
 
+  @override
   int? id;
   String? title;
   List<int>? events;

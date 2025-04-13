@@ -84,9 +84,7 @@ class UserManagementHelper{
     var proceed = await DialogHelper.showConfirmationDialogAsync(
       context,
       "Creating users".tr(),
-      "New users found. Do you want to create them?".tr() +
-          "\n" +
-          "${"Users".tr()} (${toBeCreated.length}):\n${toBeCreated.map((u) => u[Tb.occasion_users.data_email]).join(",\n")}",
+      "${"New users found. Do you want to create them?".tr()}\n${"Users".tr()} (${toBeCreated.length}):\n${toBeCreated.map((u) => u[Tb.occasion_users.data_email]).join(",\n")}",
       confirmButtonMessage: "Proceed".tr(),
     );
 
@@ -111,9 +109,7 @@ class UserManagementHelper{
     var proceed = await DialogHelper.showConfirmationDialogAsync(
       context,
       "Updating users".tr(),
-      "These users have some changes. Do you want to update them?".tr() +
-          "\n" +
-          "${"Users".tr()} (${toBeUpdated.length}):\n${toBeUpdated.map((u) => u[Tb.occasion_users.data_email]).join(",\n")}",
+      "${"These users have some changes. Do you want to update them?".tr()}\n${"Users".tr()} (${toBeUpdated.length}):\n${toBeUpdated.map((u) => u[Tb.occasion_users.data_email]).join(",\n")}",
       confirmButtonMessage: "Proceed".tr(),
     );
 
@@ -141,9 +137,7 @@ class UserManagementHelper{
     var proceed = await DialogHelper.showConfirmationDialogAsync(
       context,
       "Removing users".tr(),
-      "These users have been removed, but they still exist in the application. Do you want to remove them?".tr() +
-          "\n" +
-          "${"Users".tr()} (${toBeDeleted.length}):\n${toBeDeleted.map((u) => u.toBasicString()).join(",\n")}",
+      "${"These users have been removed, but they still exist in the application. Do you want to remove them?".tr()}\n${"Users".tr()} (${toBeDeleted.length}):\n${toBeDeleted.map((u) => u.toBasicString()).join(",\n")}",
       confirmButtonMessage: "Proceed".tr(),
     );
 

@@ -24,7 +24,7 @@ import 'package:fstapp/app_router.gr.dart';
 class OccasionHomePage extends StatefulWidget {
   static const HOME_PAGE = AppConfig.appName;
 
-  const OccasionHomePage({Key? key}) : super(key: key);
+  const OccasionHomePage({super.key});
 
   @override
   State<OccasionHomePage> createState() => _OccasionHomePageState();

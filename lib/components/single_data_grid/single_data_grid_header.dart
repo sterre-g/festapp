@@ -62,8 +62,8 @@ class _SingleDataGridHeaderState<T extends ITrinaRowModel>
       if (actionsController?.isAddActionPossible?.call() ?? true)
         ElevatedButton(
           onPressed: actionsController != null &&
-              actionsController!.areAllActionsEnabled != null &&
-              !actionsController!.areAllActionsEnabled!()
+              actionsController.areAllActionsEnabled != null &&
+              !actionsController.areAllActionsEnabled!()
               ? null
               : _addRow,
           child: const Text("Add").tr(),

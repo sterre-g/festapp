@@ -15,10 +15,10 @@ import 'package:intl/intl.dart';
 class TransactionsDialog extends StatefulWidget {
   final int orderId;
 
-  TransactionsDialog({
-    Key? key,
+  const TransactionsDialog({
+    super.key,
     required this.orderId,
-  }) : super(key: key);
+  });
 
   @override
   _TransactionsDialogState createState() => _TransactionsDialogState();

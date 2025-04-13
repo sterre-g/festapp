@@ -20,12 +20,12 @@ class BirthDateFieldBuilder extends StatefulWidget {
   final bool isCardDesign;
 
   const BirthDateFieldBuilder({
-    Key? key,
+    super.key,
     required this.fieldHolder,
     this.eventDate,
     required this.formKey,
     this.isCardDesign = false,
-  }) : super(key: key);
+  });
 
   /// Builds the birth date field.
   static Widget buildBirthDateField({

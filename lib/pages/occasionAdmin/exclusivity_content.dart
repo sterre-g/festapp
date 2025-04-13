@@ -9,7 +9,7 @@ import 'package:fstapp/data/services/db_events.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class ExclusivityContent extends StatefulWidget {
-  const ExclusivityContent({Key? key}) : super(key: key);
+  const ExclusivityContent({super.key});
 
   @override
   _ExclusivityContentState createState() => _ExclusivityContentState();

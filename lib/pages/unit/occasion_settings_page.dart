@@ -26,7 +26,7 @@ import 'package:fstapp/widgets/html_view.dart';
 
 class OccasionSettingsPage extends StatefulWidget {
   final OccasionModel occasion;
-  const OccasionSettingsPage({Key? key, required this.occasion}) : super(key: key);
+  const OccasionSettingsPage({super.key, required this.occasion});
 
   @override
   _OccasionSettingsPageState createState() => _OccasionSettingsPageState();
@@ -354,7 +354,7 @@ class _OccasionSettingsPageState extends State<OccasionSettingsPage> {
                           const SizedBox(height: 8),
                           ...enabledFeatures.map((feature) =>
                               FeatureForm(feature: feature, occasion: widget.occasion.id!)
-                          ).toList(),
+                          ),
                         ],
                         if (disabledFeatures.isNotEmpty) ...[
                           const SizedBox(height: 16),
@@ -362,7 +362,7 @@ class _OccasionSettingsPageState extends State<OccasionSettingsPage> {
                           const SizedBox(height: 8),
                           ...disabledFeatures.map((feature) =>
                               FeatureForm(feature: feature, occasion: widget.occasion.id!)
-                          ).toList(),
+                          ),
                         ],
                       ],
                     ),

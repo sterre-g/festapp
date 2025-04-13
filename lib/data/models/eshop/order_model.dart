@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class OrderModel extends ITrinaRowModel {
+  @override
   int? id;
   DateTime? createdAt;
   DateTime? updatedAt;

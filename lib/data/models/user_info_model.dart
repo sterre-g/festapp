@@ -11,6 +11,7 @@ import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 
 class UserInfoModel extends IHasId {
+  @override
   String? id;
   String? email;
   String? name;

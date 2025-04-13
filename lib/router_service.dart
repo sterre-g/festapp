@@ -5,7 +5,6 @@ import 'package:fstapp/app_router.gr.dart';
 import 'package:fstapp/data/services/app_config_service.dart';
 import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/data/services/synchro_service.dart';
-import 'package:fstapp/pages/unit/unit_page.dart';
 import 'package:fstapp/services/link_model.dart';
 
 class RouterService {

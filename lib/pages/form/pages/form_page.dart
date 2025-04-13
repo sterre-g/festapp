@@ -212,7 +212,7 @@ class _FormPageState extends State<FormPage> {
     TextInput.finishAutofillContext();
     var valid = await FormHelper.saveValidateAndScroll(formHolder!);
     setState(() {});
-    if (valid)
+    if (valid) {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -224,6 +224,7 @@ class _FormPageState extends State<FormPage> {
           );
         },
       );
+    }
   }
 
   void _scrollToTop() {

@@ -69,11 +69,11 @@ class AppRouter extends RootStackRouter {
                   AutoRoute(page: ScheduleRoute.page, path: "", initial: true),
                   AutoRoute(page: EventRoute.page, path: ":id")
                   ]),
-      AutoRoute(page: NewsRoute.page, path: "${NewsPage.ROUTE}", maintainState: false),
-      AutoRoute(page: MapRoute.page, path: "${MapPage.ROUTE}", maintainState: false, children: [
+      AutoRoute(page: NewsRoute.page, path: NewsPage.ROUTE, maintainState: false),
+      AutoRoute(page: MapRoute.page, path: MapPage.ROUTE, maintainState: false, children: [
         AutoRoute(path: ':id', page: MapRoute.page,),
       ]),
-      AutoRoute(page: InfoRoute.page, path: "${InfoPage.ROUTE}", children: [
+      AutoRoute(page: InfoRoute.page, path: InfoPage.ROUTE, children: [
         AutoRoute(
           path: ':id',
           page: InfoRoute.page,
