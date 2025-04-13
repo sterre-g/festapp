@@ -87,6 +87,7 @@ dependencies:
   vector_map_tiles: ^8.0.0
   mbtiles: ^0.4.2
   file_saver: ^0.2.14
+  accessibility_tools: ^2.4.1
 
 dev_dependencies:
   auto_route_generator: ^10.0.1

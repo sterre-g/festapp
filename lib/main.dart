@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:accessibility_tools/accessibility_tools.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:fstapp/app_router.dart';
@@ -134,21 +135,23 @@ class _MyAppState extends State<MyApp> {
         routerConfig: RouterService.router.config(navigatorObservers: () => [RoutingObserver()]),
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
-          return Stack(
-            children: [
-              child!,
-              Positioned(
-                left: _offset.dx,
-                top: _offset.dy,
-                child: GestureDetector(
-                  onPanUpdate: (d) => setState(() => _offset += Offset(d.delta.dx, d.delta.dy)),
-                  child: Visibility(
-                    visible: widget.isTimeTravelVisible,
-                    child: TimeTravelWidget(),
+          return AccessibilityTools(
+            child: Stack(
+              children: [
+                child!,
+                Positioned(
+                  left: _offset.dx,
+                  top: _offset.dy,
+                  child: GestureDetector(
+                    onPanUpdate: (d) => setState(() => _offset += Offset(d.delta.dx, d.delta.dy)),
+                    child: Visibility(
+                      visible: widget.isTimeTravelVisible,
+                      child: TimeTravelWidget(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
         localizationsDelegates: [
