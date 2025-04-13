@@ -1,0 +1,20 @@
+{
+    "name": "festapp",
+    "version": "1.0.0",
+    "description": "Mobile solution for your festival, conference or event.  - Try now on [live.festapp.net](https://live.festapp.net) or install to your phone [here](https://live.festapp.net/#/install). - Visit us on website: [festapp.net](https://festapp.net)</br></br> ![Alt text](repo-data/festapp-showcase.png?raw=true \"Showcase\")",
+    "main": "index.js",
+    "directories": {
+        "lib": "lib",
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^22.14.1",
+        "typescript": "^5.8.3"
+    }
+}

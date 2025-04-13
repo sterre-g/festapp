@@ -138,3 +138,7 @@ supabase/.env
 
 # FVM Version Cache
 .fvm/
+
+
+node_modules
+.env
