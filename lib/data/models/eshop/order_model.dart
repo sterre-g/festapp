@@ -9,7 +9,6 @@ import 'package:fstapp/data/models/eshop/payment_info_model.dart';
 import 'package:fstapp/data/services/eshop/db_orders.dart';
 import 'package:fstapp/services/time_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';
-import 'package:intl/intl.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class OrderModel extends ITrinaRowModel {

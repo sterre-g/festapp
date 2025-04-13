@@ -5,7 +5,6 @@ import 'package:fstapp/data/services/eshop/db_eshop.dart';
 import 'package:fstapp/services/toast_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';
 import 'package:fstapp/theme_config.dart';
-import 'package:intl/intl.dart';
 import 'dart:async';
 
 class SearchTransactionsScreen extends StatefulWidget {

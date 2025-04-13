@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/router_service.dart';
-import 'package:fstapp/app_config.dart';
 import 'package:fstapp/data/services/DataExtensions.dart';
 import 'package:fstapp/data/services/db_events.dart';
 import 'package:fstapp/data/services/db_users.dart';

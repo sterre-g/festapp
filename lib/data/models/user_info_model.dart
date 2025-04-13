@@ -8,7 +8,6 @@ import 'package:fstapp/data/models/unit_model.dart';
 import 'package:fstapp/data/models/user_group_info_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:collection/collection.dart';
-import 'package:intl/intl.dart';
 
 class UserInfoModel extends IHasId {
   @override
