@@ -21,7 +21,7 @@ async function generateTest(widgetFile: string) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.OLLAMA_API_KEY}`, // Add your Ollama API key if required
+                Authorization: `Bearer ${process.env.OLLAMA_API_KEY}`,
             },
             body: JSON.stringify({
                 model: "deepseek-r1:8b",
@@ -55,7 +55,10 @@ async function generateTest(widgetFile: string) {
 // Example to call it for all missing tests
 async function main() {
     const missingTests = JSON.parse(
-        fs.readFileSync("missing_accessibility_tests.json", "utf-8")
+        fs.readFileSync(
+            "github_action_scripts/output/missing_accessibility_tests.json",
+            "utf-8"
+        )
     );
 
     const widgetFile = missingTests[0]; // Only testing the first widget for now
