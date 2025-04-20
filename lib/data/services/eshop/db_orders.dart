@@ -1,5 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:fstapp/components/blueprint/blueprint_helper.dart';
+import 'package:fstapp/components/blueprint/get_orders_helper.dart';
 import 'package:fstapp/data/models/eshop/order_model.dart';
 import 'package:fstapp/data/models/eshop/order_product_ticket_model.dart';
 import 'package:fstapp/data/models/eshop/product_model.dart';
@@ -55,19 +56,23 @@ class DbOrders {
     if (response["code"] != 200) return [];
     final json = response["data"];
 
-    final spots = BlueprintHelper.parseSpots(json);
-    final products = BlueprintHelper.parseProducts(json);
-    final tickets = BlueprintHelper.parseTickets(json);
-    final orders = BlueprintHelper.parseOrders(json)!;
-    final payments = BlueprintHelper.parsePaymentInfo(json);
-    final orderProductTickets = BlueprintHelper.parseOrderProductTickets(json);
+    // Parse the individual pieces from JSON.
+    final spots = GetOrdersHelper.parseSpots(json);
+    final products = GetOrdersHelper.parseProducts(json);
+    final productTypes = GetOrdersHelper.parseProductTypes(json); // New parsing for product types.
+    final tickets = GetOrdersHelper.parseTickets(json);
+    final orders = GetOrdersHelper.parseOrders(json)!;
+    final payments = GetOrdersHelper.parsePaymentInfo(json);
+    final forms = GetOrdersHelper.parseForms(json);
+    final orderProductTickets = GetOrdersHelper.parseOrderProductTickets(json);
 
-    // Precompute maps
+    // Precompute maps for lookup.
     final ticketMap = {for (var t in tickets!) t.id: t};
     final productMap = {for (var p in products!) p.id: p};
     final paymentMap = {for (var p in payments!) p.id: p};
     final spotByOptId = {for (var s in spots!) s.orderProductTicket: s};
 
+    // Build maps to link orders, tickets and order-product-ticket entries.
     final Map<int, List<OrderProductTicketModel>> orderToOpt = {};
     final Map<int, List<OrderProductTicketModel>> ticketToOpt = {};
     for (var opt in orderProductTickets!) {
@@ -75,12 +80,15 @@ class DbOrders {
       ticketToOpt.putIfAbsent(opt.ticketId!, () => []).add(opt);
     }
 
+    // Process orders.
     for (var order in orders) {
       final orderOpts = orderToOpt[order.id] ?? [];
       final ticketIds = orderOpts.map((opt) => opt.ticketId).toSet();
       final relatedTickets = ticketIds.map((id) => ticketMap[id]).whereType<TicketModel>().toList();
       order.relatedTickets = relatedTickets;
+      order.form = forms?.firstWhereOrNull((f) => f.formKey == order.formKey);
 
+      // Process tickets attached to the order.
       for (var ticket in relatedTickets) {
         final ticketOpts = ticketToOpt[ticket.id] ?? [];
         for (var opt in ticketOpts) {
@@ -90,14 +98,12 @@ class DbOrders {
           }
         }
         final productIds = ticketOpts.map((opt) => opt.productId).toSet();
-        ticket.relatedProducts =
-            productIds.map((pid) => productMap[pid]).whereType<ProductModel>().toList();
+        ticket.relatedProducts = productIds.map((pid) => productMap[pid]).whereType<ProductModel>().toList();
         ticket.relatedOrder = order;
       }
 
       final ticketIdsForOrder = relatedTickets.map((t) => t.id).toSet();
-      order.relatedSpots =
-          spots.where((s) => ticketIdsForOrder.contains(s.orderProductTicket)).toList();
+      order.relatedSpots = spots.where((s) => ticketIdsForOrder.contains(s.orderProductTicket)).toList();
 
       final orderProductIds = <int>{};
       for (var ticket in relatedTickets) {
@@ -105,8 +111,7 @@ class DbOrders {
           orderProductIds.addAll(ticket.relatedProducts!.map((p) => p.id!));
         }
       }
-      order.relatedProducts =
-          products.where((p) => orderProductIds.contains(p.id)).toList();
+      order.relatedProducts = products.where((p) => orderProductIds.contains(p.id)).toList();
 
       order.paymentInfoModel = paymentMap[order.paymentInfo];
 
@@ -156,7 +161,6 @@ class DbOrders {
     if (response["code"] != 200) {
       throw Exception("Failed to update order and tickets to 'paid'. Error: ${response['message']}");
     }
-
   }
 
   static Future<List<Map<String, dynamic>>> getOrderHistory(int orderId) async {
@@ -179,7 +183,7 @@ class DbOrders {
   }) async {
     final body = {
       "templateCode": "TICKET_ORDER_STORNO",
-      "data": { "orderId": orderId },
+      "data": {"orderId": orderId},
     };
 
     try {

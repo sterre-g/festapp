@@ -6,6 +6,8 @@ import 'package:fstapp/data/models/eshop/ticket_model.dart';
 import 'package:fstapp/data/models/eshop/product_model.dart';
 import 'package:fstapp/components/blueprint/blueprint_object_model.dart';
 import 'package:fstapp/data/models/eshop/payment_info_model.dart';
+import 'package:fstapp/data/models/form_model.dart';
+import 'package:fstapp/data/models/tb.dart';
 import 'package:fstapp/data/services/eshop/db_orders.dart';
 import 'package:fstapp/services/time_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';
@@ -21,11 +23,12 @@ class OrderModel extends ITrinaRowModel {
   Map<String, dynamic>? data;
   int? occasion;
   int? paymentInfo;
-  int? form;
+  String? formKey;
   String? currencyCode;
   String? noteHidden;
 
   // Relating tickets, spots, products, and payment info to the order
+  FormModel? form;
   List<TicketModel>? relatedTickets;
   List<BlueprintObjectModel>? relatedSpots;
   List<ProductModel>? relatedProducts;
@@ -79,6 +82,7 @@ class OrderModel extends ITrinaRowModel {
     final deadlineDate = DateTime(paymentInfoModel!.deadline!.year, paymentInfoModel!.deadline!.month, paymentInfoModel!.deadline!.day);
     return nowDate.isAfter(deadlineDate);
   }
+
   static Color singleDataGridStateToColor(String state) {
     Color color;
     String firstPart = state.split(";")[0];
@@ -116,7 +120,7 @@ class OrderModel extends ITrinaRowModel {
     this.data,
     this.occasion,
     this.paymentInfo,
-    this.form,
+    this.formKey,
     this.currencyCode,
     this.relatedTickets,
     this.relatedSpots,
@@ -128,73 +132,60 @@ class OrderModel extends ITrinaRowModel {
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       id: json[TbEshop.orders.id],
-      createdAt: json[TbEshop.orders.created_at] != null
-          ? DateTime.parse(json[TbEshop.orders.created_at])
-          : null,
-      updatedAt: json[TbEshop.orders.updated_at] != null
-          ? DateTime.parse(json[TbEshop.orders.updated_at])
-          : null,
-      price: json[TbEshop.orders.price] != null
-          ? double.tryParse(json[TbEshop.orders.price].toString())
-          : null,
+      createdAt: json[TbEshop.orders.created_at] != null ? DateTime.parse(json[TbEshop.orders.created_at]) : null,
+      updatedAt: json[TbEshop.orders.updated_at] != null ? DateTime.parse(json[TbEshop.orders.updated_at]) : null,
+      price: json[TbEshop.orders.price] != null ? double.tryParse(json[TbEshop.orders.price].toString()) : null,
+      currencyCode: json[TbEshop.orders.currency_code],
       state: json[TbEshop.orders.state],
+      formKey: json[TbEshop.orders.data] != null ? json[TbEshop.orders.data][TbEshop.orders.data_form] : null,
       data: json[TbEshop.orders.data],
       occasion: json[TbEshop.orders.occasion],
       paymentInfo: json[TbEshop.orders.payment_info],
-      currencyCode: json[TbEshop.orders.currency_code],
       noteHidden: json[TbEshop.orders.note_hidden],
     );
   }
 
   static OrderModel fromPlutoJson(Map<String, dynamic> json) {
-    return OrderModel(
-        id: json[TbEshop.orders.id] == -1 ? null : json[TbEshop.orders.id],
-        noteHidden: json[TbEshop.orders.note_hidden]);
+    return OrderModel(id: json[TbEshop.orders.id] == -1 ? null : json[TbEshop.orders.id], noteHidden: json[TbEshop.orders.note_hidden]);
   }
 
   Map<String, dynamic> toJson() => {
-    TbEshop.orders.id: id,
-    TbEshop.orders.created_at: createdAt?.toIso8601String(),
-    TbEshop.orders.updated_at: updatedAt?.toIso8601String(),
-    TbEshop.orders.price: price,
-    TbEshop.orders.state: state,
-    TbEshop.orders.data: data,
-    TbEshop.orders.occasion: occasion,
-    TbEshop.orders.payment_info: paymentInfo,
-    TbEshop.orders.currency_code: currencyCode,
-    TbEshop.orders.note_hidden: noteHidden,
-  };
+        TbEshop.orders.id: id,
+        TbEshop.orders.created_at: createdAt?.toIso8601String(),
+        TbEshop.orders.updated_at: updatedAt?.toIso8601String(),
+        TbEshop.orders.price: price,
+        TbEshop.orders.state: state,
+        TbEshop.orders.data: data,
+        TbEshop.orders.occasion: occasion,
+        TbEshop.orders.payment_info: paymentInfo,
+        TbEshop.orders.currency_code: currencyCode,
+        TbEshop.orders.note_hidden: noteHidden,
+      };
 
   @override
   TrinaRow toTrinaRow(BuildContext context) {
     return TrinaRow(cells: {
       TbEshop.orders.id: TrinaCell(value: id ?? 0),
       TbEshop.orders.order_symbol: TrinaCell(value: id ?? 0),
-      TbEshop.orders.price: TrinaCell(value: price != null ? Utilities.formatPrice(context, price!) : ""),
+      TbEshop.orders.price: TrinaCell(value: price != null ? Utilities.formatPrice(context, price!, currencyCode: currencyCode) : ""),
       TbEshop.orders.state: TrinaCell(value: OrderModel.formatState(state ?? orderedState)),
-      TbEshop.payment_info.amount: TrinaCell(value: paymentInfoModel?.amount != null ? Utilities.formatPrice(context, paymentInfoModel!.amount!) : ""),
-      TbEshop.payment_info.paid: TrinaCell(value: paymentInfoModel?.paid != null ? Utilities.formatPrice(context, paymentInfoModel!.paid!) : ""),
-      TbEshop.payment_info.returned: TrinaCell(value: paymentInfoModel?.returned != null ? Utilities.formatPrice(context, paymentInfoModel!.returned!) : ""),
+      TbEshop.payment_info.amount: TrinaCell(value: paymentInfoModel?.amount != null ? Utilities.formatPrice(context, paymentInfoModel!.amount!, currencyCode: paymentInfoModel!.currencyCode) : ""),
+      TbEshop.payment_info.paid: TrinaCell(value: paymentInfoModel?.paid != null ? Utilities.formatPrice(context, paymentInfoModel!.paid!, currencyCode: paymentInfoModel!.currencyCode) : ""),
+      TbEshop.payment_info.returned:
+          TrinaCell(value: paymentInfoModel?.returned != null ? Utilities.formatPrice(context, paymentInfoModel!.returned!, currencyCode: paymentInfoModel!.currencyCode) : ""),
       TbEshop.payment_info.variable_symbol: TrinaCell(value: paymentInfoModel?.variableSymbol ?? 0),
       TbEshop.payment_info.deadline: TrinaCell(
-        value: paymentInfoModel?.deadline != null
-            ? DateFormat('yyyy-MM-dd').format(paymentInfoModel!.deadline!)
-            : "",
+        value: paymentInfoModel?.deadline != null ? DateFormat('yyyy-MM-dd').format(paymentInfoModel!.deadline!) : "",
       ),
-      TbEshop.orders.created_at: TrinaCell(
-          value: createdAt != null
-              ? DateFormat('yyyy-MM-dd').format(createdAt!)
-              : ""),
+      TbEshop.orders.created_at: TrinaCell(value: createdAt != null ? DateFormat('yyyy-MM-dd').format(createdAt!) : ""),
       TbEshop.orders.data: TrinaCell(value: toCustomerData()),
       TbEshop.orders.data_email: TrinaCell(value: data?[TbEshop.orders.data_email]),
-      TicketModel.metaTicketsProducts: TrinaCell(
-          value: relatedProducts != null
-              ? relatedProducts!.map((p)=>p.toBasicString()).join(" | ")
-              : ""),
+      TicketModel.metaTicketsProducts: TrinaCell(value: relatedProducts != null ? relatedProducts!.map((p) => p.toBasicString()).join(" | ") : ""),
       TbEshop.orders.data_note: TrinaCell(value: toCustomerNote()),
       TbEshop.orders.note_hidden: TrinaCell(value: noteHidden ?? ""),
       TbEshop.orders_history.table: TrinaCell(value: ""),
       TbEshop.transactions.table: TrinaCell(value: ""),
+      Tb.forms.table: TrinaCell(value: form?.link ?? ""),
     });
   }
 

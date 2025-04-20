@@ -12,13 +12,7 @@ class CompanionDialog extends StatefulWidget {
   List<CompanionModel> companions = [];
   Future<void> Function()? refreshData;
 
-  CompanionDialog({
-    super.key,
-    required this.eventId,
-    required this.maxCompanions,
-    required this.companions,
-    this.refreshData
-  });
+  CompanionDialog({super.key, required this.eventId, required this.maxCompanions, required this.companions, this.refreshData});
 
   @override
   _CompanionDialogState createState() => _CompanionDialogState();
@@ -28,22 +22,16 @@ class _CompanionDialogState extends State<CompanionDialog> {
   final TextEditingController _nameController = TextEditingController();
 
   Future<void> _createCompanion() async {
-    if (widget.companions.length < widget.maxCompanions &&
-        _nameController.text.isNotEmpty) {
+    if (widget.companions.length < widget.maxCompanions && _nameController.text.isNotEmpty) {
       await DbCompanions.create(_nameController.text);
       _nameController.clear();
-      widget.companions =
-          await DbCompanions.getAllCompanions();
+      widget.companions = await DbCompanions.getAllCompanions();
       setState(() {});
     }
   }
 
   Future<void> _deleteCompanion(CompanionModel companion) async {
-    var answer = await DialogHelper.showConfirmationDialogAsync(
-        context,
-        "Delete companion".tr(),
-        "By deleting your companion you will also sign him/her out of all signed in sessions."
-            .tr());
+    var answer = await DialogHelper.showConfirmationDialogAsync(context, "Delete companion".tr(), "By deleting your companion you will also sign him/her out of all signed in sessions.".tr());
     if (!answer) {
       return;
     }
@@ -78,8 +66,8 @@ class _CompanionDialogState extends State<CompanionDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                      "If you have a child, partner or friend without a phone, you can sign them in as a companion. They will need a festival band to enter the event. Maximal number of companions is {max_companions}.", )
-                  .tr(namedArgs: {"max_companions": FeatureService.getMaxCompanions().toString()}),
+                "If you have a child, partner or friend without a phone, you can sign them in as a companion. They will need a festival band to enter the event. Maximal number of companions is {max_companions}.",
+              ).tr(namedArgs: {"max_companions": FeatureService.getMaxCompanions().toString()}),
               const SizedBox(height: 20),
               Visibility(
                 visible: widget.companions.length < widget.maxCompanions,
@@ -87,8 +75,7 @@ class _CompanionDialogState extends State<CompanionDialog> {
                   children: [
                     TextField(
                       controller: _nameController,
-                      decoration:
-                          InputDecoration(labelText: "Companion Name".tr()),
+                      decoration: InputDecoration(labelText: "Companion Name".tr()),
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(30),
                       ],

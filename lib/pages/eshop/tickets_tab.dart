@@ -33,13 +33,13 @@ class _TicketsTabState extends State<TicketsTab> {
     EshopColumns.TICKET_STATE,
     EshopColumns.TICKET_TOTAL_PRICE,
     EshopColumns.TICKET_SPOT,
-    EshopColumns.TICKET_PRODUCTS,
+    EshopColumns.TICKET_PRODUCTS_EXTENDED,
     EshopColumns.TICKET_NOTE,
     EshopColumns.TICKET_NOTE_HIDDEN,
   ];
 
   @override
-  void didChangeDependencies() {
+  Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
     if (formLink == null && context.routeData.params.isNotEmpty) {
       formLink = context.routeData.params.getString("formLink");
@@ -67,7 +67,10 @@ class _TicketsTabState extends State<TicketsTab> {
             isEnabled: RightsService.isEditor,
           ),
         ],
-        columns: EshopColumns.generateColumns(context, columnIdentifiers),
+        columns: EshopColumns.generateColumns(context, columnIdentifiers,
+          data: {
+            EshopColumns.TICKET_PRODUCTS_EXTENDED: EshopColumns.productCategories,
+          },),
       );
     }
   }

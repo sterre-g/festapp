@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fstapp/app_config.dart';
 import 'package:fstapp/router_service.dart';
 import 'package:fstapp/components/features/feature.dart';
 import 'package:fstapp/data/models/occasion_model.dart';
@@ -107,7 +108,7 @@ class OccasionDetailDialog extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    if (occasion.isOpen)
+                    if (!AppConfig.isAllUnit && occasion.isOpen)
                       Row(
                         children: [
                           Expanded(

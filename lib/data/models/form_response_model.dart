@@ -6,6 +6,7 @@ import 'package:fstapp/data/models/user_info_model.dart';
 import 'package:fstapp/data/models/eshop/order_model.dart';
 import 'package:fstapp/data/models/eshop/tb_eshop.dart';
 import 'package:fstapp/data/models/eshop/ticket_model.dart';
+import 'package:fstapp/pages/eshop/eshop_columns.dart';
 import 'package:fstapp/pages/form/widgets_view/form_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';
 import 'package:trina_grid/trina_grid.dart';
@@ -25,40 +26,36 @@ class FormResponseModel extends ITrinaRowModel {
   });
 
   static FormResponseModel fromPlutoJson(Map<String, dynamic> json) {
-    return FormResponseModel(
-        order: json[TbEshop.orders.order_symbol]);
+    return FormResponseModel(order: json[TbEshop.orders.order_symbol]);
   }
 
   @override
   TrinaRow toTrinaRow(BuildContext context) {
-    // Initialize the cells with fixed fields
     Map<String, TrinaCell> cells = {
       TbEshop.orders.id: TrinaCell(value: id),
       TbEshop.orders.order_symbol: TrinaCell(value: order!.id),
       TbEshop.orders.state: TrinaCell(value: order!.state),
-      TicketModel.metaTicketsProducts: TrinaCell(
-          value: order!.relatedProducts != null
-              ? order!.relatedProducts!.map((p)=>p.toBasicString()).join(" | ")
-              : ""),
+      TicketModel.metaTicketsProducts: TrinaCell(value: order!.relatedProducts != null ? order!.relatedProducts!.map((p) => p.toBasicString()).join(" | ") : ""),
     };
 
+    final productCells = EshopColumns.generateProductTypeCells(order!.relatedProducts ?? []);
+    cells.addAll(productCells);
+
+    // Process additional form fields.
     for (var f in allFields!) {
-      if(fields == null) {
+      if (fields == null) {
         cells[f.id.toString()] = TrinaCell(value: '');
         continue;
       }
-      if(f.type == FormHelper.fieldTypeSex){
+      if (f.type == FormHelper.fieldTypeSex) {
         cells[f.id.toString()] = TrinaCell(value: UserInfoModel.sexToLocale(fields![f.id.toString()]));
         continue;
       }
       if (f.type == FormHelper.fieldTypeBirthDate) {
-        // Parse the ISO datetime string into a DateTime object.
+        // Parse ISO datetime string into a DateTime object.
         var dt = DateTime.tryParse(fields![f.id.toString()] ?? "");
-
         // Format the DateTime into a "year-month-day" string.
         String formattedDate = dt == null ? "" : '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
-
-        // Assign the formatted date string to the cell.
         cells[f.id.toString()] = TrinaCell(value: formattedDate);
         continue;
       }
@@ -82,32 +79,23 @@ class FormResponseModel extends ITrinaRowModel {
       extractedFields = {
         for (var f in fieldsData)
           if (f is Map<String, dynamic>)
-            for (var entry in f.entries)
-              entry.key: entry.value,
+            for (var entry in f.entries) entry.key: entry.value,
       };
     } else {
       extractedFields = null;
     }
 
-    return FormResponseModel(
-      id: order.id,
-      order: order,
-      fields: extractedFields,
-      allFields: allFields
-    );
+    return FormResponseModel(id: order.id, order: order, fields: extractedFields, allFields: allFields);
   }
 
   @override
-  Future<void> deleteMethod() async {
-  }
+  Future<void> deleteMethod() async {}
 
   @override
-  Future<void> updateMethod() async {
-  }
+  Future<void> updateMethod() async {}
 
   @override
   String toBasicString() {
     return order.toString();
   }
-
 }

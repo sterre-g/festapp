@@ -29,7 +29,9 @@ class Tb {
   static UnitUsersTb unit_users = const UnitUsersTb();
   static ImagesTb images = const ImagesTb();
   static EmailTemplatesTb email_templates = const EmailTemplatesTb();
+  static PathGroupsTb path_groups = const PathGroupsTb();
 }
+
 class OccasionsTb {
   const OccasionsTb();
   String get table => "occasions";
@@ -71,7 +73,8 @@ class OccasionsTb {
   String get data_features_code => "code";
   String get data_features_is_enabled => "is_enabled";
 }
-class OccasionUsersTb{
+
+class OccasionUsersTb {
   const OccasionUsersTb();
   String get table => "occasion_users";
   String get occasion => "occasion";
@@ -103,7 +106,8 @@ class OccasionUsersTb{
   String get services_accommodation => "services_accommodation";
   String get services_food => "services_food";
 }
-class NewsTb{
+
+class NewsTb {
   const NewsTb();
   String get table => "news";
   String get id => "id";
@@ -113,7 +117,8 @@ class NewsTb{
   String get created_by => "created_by";
   String get message => "message";
 }
-class UserNewsTb{
+
+class UserNewsTb {
   const UserNewsTb();
   String get table => "user_news";
   String get occasion => "occasion";
@@ -122,7 +127,8 @@ class UserNewsTb{
   String get user => "user";
   String get message => "message";
 }
-class UserInfoTb{
+
+class UserInfoTb {
   const UserInfoTb();
   String get table => "user_info";
   String get id => "id";
@@ -140,7 +146,8 @@ class UserInfoTb{
   String get is_admin_readonly => "is_admin_readonly";
   String get data => "data";
 }
-class UserInfoPublicTb{
+
+class UserInfoPublicTb {
   const UserInfoPublicTb();
   String get table => "user_info_public";
   String get id => "id";
@@ -149,20 +156,22 @@ class UserInfoPublicTb{
   String get sex => "sex";
 }
 
-class RoleInfoTb{
+class RoleInfoTb {
   const RoleInfoTb();
   String get table => "role_info";
   String get id => "id";
   String get title => "title";
   String get occasion => "occasion";
 }
-class EventRolesTb{
+
+class EventRolesTb {
   const EventRolesTb();
   String get table => "event_roles";
   String get event => "event";
   String get role => "role";
 }
-class InformationTb{
+
+class InformationTb {
   const InformationTb();
   String get table => "information";
   String get id => "id";
@@ -181,16 +190,17 @@ class InformationTb{
   String get data_correct_reference => "correct_reference";
   String get data_date => "date";
 }
-class InformationHidden{
+
+class InformationHidden {
   const InformationHidden();
   String get table => "information_hidden";
   String get occasion => "occasion";
   String get id => "id";
   String get data => "data";
   String get data_correct => "correct";
-
 }
-class EventsTb{
+
+class EventsTb {
   const EventsTb();
   String get table => "events";
   String get id => "id";
@@ -208,40 +218,46 @@ class EventsTb{
   String get is_group_event => "is_group_event";
   String get type => "type";
 }
-class EventUserTb{
+
+class EventUserTb {
   const EventUserTb();
   String get table => "event_users";
   String get created_at => "created_at";
   String get event => "event";
   String get user => "user";
 }
-class EventUsersSavedTb{
+
+class EventUsersSavedTb {
   const EventUsersSavedTb();
   String get table => "event_users_saved";
   String get created_at => "created_at";
   String get event => "event";
   String get user => "user";
 }
-class EventGroupsTb{
+
+class EventGroupsTb {
   const EventGroupsTb();
   String get table => "event_groups";
   String get event_parent => "event_parent";
   String get event_child => "event_child";
 }
-class ExclusiveGroupTb{
+
+class ExclusiveGroupTb {
   const ExclusiveGroupTb();
   String get table => "exclusive_groups";
   String get id => "id";
   String get occasion => "occasion";
   String get title => "title";
 }
-class ExclusiveEventsTb{
+
+class ExclusiveEventsTb {
   const ExclusiveEventsTb();
   String get table => "exclusive_events";
   String get event => "event";
   String get group => "group";
 }
-class PlacesTb{
+
+class PlacesTb {
   const PlacesTb();
   String get table => "places";
   String get id => "id";
@@ -256,7 +272,8 @@ class PlacesTb{
   String get order => "order";
   String get icon => "icon";
 }
-class UserGroupInfoTb{
+
+class UserGroupInfoTb {
   const UserGroupInfoTb();
   String get table => "user_group_info";
   String get id => "id";
@@ -268,14 +285,16 @@ class UserGroupInfoTb{
   String get type => "type";
   String get data => "data";
 }
-class UserGroupsTb{
+
+class UserGroupsTb {
   const UserGroupsTb();
   String get table => "user_groups";
   String get user => "user";
   String get group => "group";
   String get is_admin => "is_admin";
 }
-class LogNotificationsTb{
+
+class LogNotificationsTb {
   const LogNotificationsTb();
   String get table => "log_notifications";
   String get id => "id";
@@ -287,13 +306,15 @@ class LogNotificationsTb{
   String get content => "content";
   String get to => "to";
 }
-class UserCompanionsTb{
+
+class UserCompanionsTb {
   const UserCompanionsTb();
   String get table => "user_companions";
   String get user => "user";
   String get companion => "companion";
 }
-class IconsTb{
+
+class IconsTb {
   const IconsTb();
   String get table => "icons";
   String get id => "id";
@@ -303,7 +324,8 @@ class IconsTb{
   String get link => "link";
   String get data => "data";
 }
-class OrganizationsTb{
+
+class OrganizationsTb {
   const OrganizationsTb();
   String get table => "organizations";
   String get id => "id";
@@ -312,7 +334,8 @@ class OrganizationsTb{
   String get title => "title";
   String get data => "data";
 }
-class OrganizationUsersTb{
+
+class OrganizationUsersTb {
   const OrganizationUsersTb();
   String get table => "organization_users";
   String get id => "id";
@@ -322,6 +345,7 @@ class OrganizationUsersTb{
   String get user => "user";
   String get is_admin => "is_admin";
 }
+
 class FormsTb {
   const FormsTb();
   String get table => "forms";
@@ -354,6 +378,7 @@ class FormFieldsTb {
   String get is_hidden => "is_hidden";
   String get order => "order";
   String get product_type => "product_type";
+  String get product_type_data => "product_type_data";
   String get is_ticket_field => "is_ticket_field";
 }
 
@@ -399,4 +424,18 @@ class EmailTemplatesTb {
   String get organization => "organization";
   String get code => "code";
   String get unit => "unit";
+}
+
+class PathGroupsTb {
+  const PathGroupsTb();
+  String get table => "path_groups";
+  String get id => "id";
+  String get is_hidden => "is_hidden";
+  String get title => "title";
+  String get path_data => "path_data";
+  String get data => "data";
+  String get icon => "icon";
+  String get color => "color";
+  String get occasion => "occasion";
+  String get order => "order";
 }

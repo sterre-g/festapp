@@ -13,6 +13,7 @@ import 'package:fstapp/data/models/eshop/product_type_model.dart';
 import 'package:fstapp/data/services/rights_service.dart';
 import 'package:fstapp/data/services/eshop/db_forms.dart';
 import 'package:fstapp/data/services/eshop/db_orders.dart';
+
 import 'package:fstapp/pages/eshop/order_finish_screen.dart';
 import 'package:fstapp/pages/eshop/order_preview_screen.dart';
 import 'package:fstapp/pages/form/widgets_view/form_helper.dart';
@@ -43,6 +44,7 @@ class _FormPageState extends State<FormPage> {
   bool _isLoading = false;
   bool _formNotAvailable = false;
   double _totalPrice = 0.0;
+
   int _totalTickets = 0;
   Map<String, dynamic>? formResult;
   FormHolder? formHolder;
@@ -116,6 +118,7 @@ class _FormPageState extends State<FormPage> {
   }
 
   void _updateTotalPrice() {
+    String? currencyC;
     _totalPrice = 0.0;
     _totalTickets = 0;
 
@@ -124,6 +127,7 @@ class _FormPageState extends State<FormPage> {
         var selectedOption = field.getValue(formHolder!.controller!.globalKey);
         if (selectedOption is FormOptionProductModel) {
           _totalPrice += selectedOption.price;
+          currencyC ??= selectedOption.currencyCode;
         }
       }
 
@@ -142,6 +146,7 @@ class _FormPageState extends State<FormPage> {
           for (var s in field.tickets) {
             if (s.seat != null) {
               _totalPrice += s.seat!.objectModel!.product!.price!;
+              currencyC ??= s.seat!.objectModel!.product!.currencyCode;
             }
           }
         }
@@ -153,6 +158,12 @@ class _FormPageState extends State<FormPage> {
             for (var fValue in ticketField.values) {
               if (fValue is FormOptionProductModel) {
                 _totalPrice += fValue.price;
+                currencyC ??= fValue.currencyCode;
+              } else if (fValue is Iterable) {
+                // Convert the JSArray (or any iterable) to a Dart list and sum the prices.
+                var products = List<FormOptionProductModel>.from(fValue);
+                _totalPrice += products.fold(0, (sum, product) => sum + product.price);
+                currencyC ??= products.firstOrNull?.currencyCode;
               }
             }
           }
@@ -160,6 +171,7 @@ class _FormPageState extends State<FormPage> {
       }
     }
 
+    formHolder!.controller!.currencyCode = currencyC;
     setState(() {});
   }
 
@@ -195,7 +207,7 @@ class _FormPageState extends State<FormPage> {
             ),
             const SizedBox(width: 10), // Increased spacing
             Text(
-              Utilities.formatPrice(context, _totalPrice),
+              Utilities.formatPrice(context, _totalPrice, currencyCode: formHolder!.controller!.currencyCode),
               style: const TextStyle(
                 fontSize: 18, // Increased font size
                 fontWeight: FontWeight.bold,
@@ -315,7 +327,7 @@ class _FormPageState extends State<FormPage> {
                                                 isLoading: _isLoading,
                                                 height: 50.0,
                                                 width: 250.0,
-                                                isEnabled: _totalPrice > 0,
+                                                //isEnabled: _totalPrice > 0,
                                               ),
                                               const SizedBox(height: 32),
                                             ],

@@ -24,9 +24,9 @@ const double kVerticalPadding = 32.0;
 @RoutePage()
 class UnitPage extends StatefulWidget {
   static const ROUTE = "unit";
-  final int id;
+  final int? id;
 
-  const UnitPage({@pathParam required this.id, super.key});
+  const UnitPage({@pathParam this.id, super.key});
 
   @override
   _UnitPageState createState() => _UnitPageState();
@@ -37,6 +37,7 @@ class _UnitPageState extends State<UnitPage> {
   List<OccasionModel> _occasions = [];
   InformationModel? _quote;
   final ScrollController _scrollController = ScrollController();
+  int? _initialId;
 
   @override
   void initState() {
@@ -48,14 +49,15 @@ class _UnitPageState extends State<UnitPage> {
     _occasions = await OfflineDataService.getAllOccasions();
     setState(() {});
 
-    final unit = await DbUnits.getUnit(widget.id);
+    _initialId = widget.id ?? RightsService.currentUnit!.id!;
+
+    final unit = await DbUnits.getUnit(_initialId!);
 
     final occasions = unit.occasions!;
     OfflineDataService.saveAllOccasions(occasions);
 
-    if (FeatureService.isFeatureEnabled(FeatureConstants.quotes,
-        features: unit.features)) {
-      _quote = await DbInformation.getCurrentQuote(widget.id);
+    if (FeatureService.isFeatureEnabled(FeatureConstants.quotes, features: unit.features)) {
+      _quote = await DbInformation.getCurrentQuote(_initialId!);
     }
     setState(() {
       _unit = unit;
@@ -72,24 +74,19 @@ class _UnitPageState extends State<UnitPage> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final presentEvents = _occasions
-        .where((o) => o.startTime!.isBefore(now) && o.endTime!.isAfter(now))
-        .toList();
-    final upcomingEvents =
-    _occasions.where((o) => o.startTime!.isAfter(now)).toList();
+    final presentEvents = _occasions.where((o) => o.startTime!.isBefore(now) && o.endTime!.isAfter(now)).toList();
+    final upcomingEvents = _occasions.where((o) => o.startTime!.isAfter(now)).toList();
     upcomingEvents.sort((a, b) => a.startTime!.compareTo(b.startTime!));
-    final pastEvents =
-    _occasions.where((o) => o.endTime!.isBefore(now)).toList();
+    final pastEvents = _occasions.where((o) => o.endTime!.isBefore(now)).toList();
 
     return Scaffold(
       floatingActionButton: RightsService.canUserSeeUnitWorkspace()
           ? FloatingActionButton(
-        onPressed: () {
-          RouterService.navigate(context, "unit/${widget.id}/edit")
-              .then((_) => _loadUnitAndOccasions());
-        },
-        child: const Icon(Icons.edit),
-      )
+              onPressed: () {
+                RouterService.navigate(context, "unit/$_initialId/edit").then((_) => _loadUnitAndOccasions());
+              },
+              child: const Icon(Icons.edit),
+            )
           : null,
       body: CustomScrollView(
         controller: _scrollController,
@@ -100,18 +97,15 @@ class _UnitPageState extends State<UnitPage> {
           if (_unit != null && _quote != null)
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: kVerticalPadding, horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: kVerticalPadding, horizontal: 16.0),
                 child: Center(
                   child: ConstrainedBox(
-                    constraints:
-                    BoxConstraints(maxWidth: StylesConfig.formMaxWidth),
+                    constraints: BoxConstraints(maxWidth: StylesConfig.formMaxWidth),
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: ThemeConfig.whiteColor(context),
-                        border:
-                        Border.all(color: ThemeConfig.grey300(context)),
+                        border: Border.all(color: ThemeConfig.grey300(context)),
                         borderRadius: BorderRadius.circular(8.0),
                         boxShadow: const [
                           BoxShadow(
@@ -134,12 +128,10 @@ class _UnitPageState extends State<UnitPage> {
           if (presentEvents.isNotEmpty)
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 16.0, horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                 child: Text(
                   "Happening Now".tr(),
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -152,15 +144,14 @@ class _UnitPageState extends State<UnitPage> {
                   crossAxisCount: ResponsiveService.isDesktop(context)
                       ? 3
                       : ResponsiveService.isTablet(context)
-                      ? 2
-                      : 1,
+                          ? 2
+                          : 1,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: OccasionCard.kCardWidth /
-                      OccasionCard.kCardHeight,
+                  childAspectRatio: OccasionCard.kCardWidth / OccasionCard.kCardHeight,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                      (context, index) {
+                  (context, index) {
                     final occasion = presentEvents[index];
                     // Wrap each card in a RepaintBoundary.
                     return RepaintBoundary(
@@ -179,12 +170,10 @@ class _UnitPageState extends State<UnitPage> {
           if (upcomingEvents.isNotEmpty)
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 16.0, horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                 child: Text(
                   "Upcoming Events".tr(),
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -197,15 +186,14 @@ class _UnitPageState extends State<UnitPage> {
                   crossAxisCount: ResponsiveService.isDesktop(context)
                       ? 3
                       : ResponsiveService.isTablet(context)
-                      ? 2
-                      : 1,
+                          ? 2
+                          : 1,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: OccasionCard.kCardWidth /
-                      OccasionCard.kCardHeight,
+                  childAspectRatio: OccasionCard.kCardWidth / OccasionCard.kCardHeight,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                      (context, index) {
+                  (context, index) {
                     final occasion = upcomingEvents[index];
                     return RepaintBoundary(
                       child: OccasionCard(
@@ -223,12 +211,10 @@ class _UnitPageState extends State<UnitPage> {
           if (pastEvents.isNotEmpty)
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 16.0, horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                 child: Text(
                   "Past Events".tr(),
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -241,15 +227,14 @@ class _UnitPageState extends State<UnitPage> {
                   crossAxisCount: ResponsiveService.isDesktop(context)
                       ? 3
                       : ResponsiveService.isTablet(context)
-                      ? 2
-                      : 1,
+                          ? 2
+                          : 1,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: OccasionCard.kCardWidth /
-                      OccasionCard.kCardHeight,
+                  childAspectRatio: OccasionCard.kCardWidth / OccasionCard.kCardHeight,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                      (context, index) {
+                  (context, index) {
                     final occasion = pastEvents[index];
                     return RepaintBoundary(
                       child: OccasionCard(

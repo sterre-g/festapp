@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fstapp/data/services/rights_service.dart';
+import 'package:fstapp/app_config.dart';
 import 'package:fstapp/pages/occasion/check_page.dart';
 import 'package:fstapp/pages/occasion/event_edit_page.dart';
 import 'package:fstapp/pages/occasion/event_page.dart';
@@ -38,61 +39,71 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: ResetPasswordRoute.page, path: sl(ResetPasswordPage.ROUTE)),
-    AutoRoute(page: ForgotPasswordRoute.page, path: sl(ForgotPasswordPage.ROUTE)),
-    AutoRoute(page: LoginRoute.page, path: sl(LoginPage.ROUTE)),
-    AutoRoute(page: SignupRoute.page, path: sl(SignupPage.ROUTE)),
-    AutoRoute(page: SettingsRoute.page, path: sl(SettingsPage.ROUTE)),
-    AutoRoute(page: InstallRoute.page, path: sl(InstallPage.ROUTE)),
-    AutoRoute(page: InstanceInstallRoute.page, path: sl(InstanceInstallPage.ROUTE)),
-    AutoRoute(page: UnitAdminRoute.page, path: "/${UnitPage.ROUTE}/:id/edit"),
-    AutoRoute(page: UnitRoute.page, path: "/${UnitPage.ROUTE}/:id"),
-    AutoRoute(page: ScanRoute.page, path: "/${ScanPage.ROUTE}", children: [
-      AutoRoute(path: ':scanCode', page: ScanRoute.page,),
-    ]),
-    AutoRoute(page: FormRoute.page, path: "/${FormPage.ROUTE}/:formLink"),
-    AutoRoute(page: FormEditRoute.page, path: "/${FormPage.ROUTE}/:formLink/edit"),
-    AutoRoute(page: CheckRoute.page, path: "/:$linkFormatted/${CheckPage.ROUTE}/:id"),
-    AutoRoute(page: NewsFormRoute.page, path: "/:$linkFormatted/${NewsFormPage.ROUTE}"),
-    AutoRoute(page: HtmlEditorRoute.page, path: "/:$linkFormatted/${HtmlEditorPage.ROUTE}"),
-    AutoRoute(page: AdminRoute.page, path: "/:$linkFormatted/${AdminPage.ROUTE}"),
-    AutoRoute(page: MyScheduleRoute.page, path: "/:$linkFormatted/${MySchedulePage.ROUTE}"),
-    AutoRoute(page: TimetableRoute.page, path: "/:$linkFormatted/${TimetablePage.ROUTE}"),
-    AutoRoute(page: GameRoute.page, path: "/:$linkFormatted/${GamePage.ROUTE}"),
-    AutoRoute(page: SongbookRoute.page, path: "/:$linkFormatted/${SongbookPage.ROUTE}"),
-    AutoRoute(page: EventEditRoute.page, path: "/:$linkFormatted/${EventEditPage.ROUTE}", children: [
-      AutoRoute(path: ':id', page: EventEditRoute.page,),
-    ]),
-    AutoRoute(page: OccasionHomeRoute.page, path: "/:$linkFormatted", children: [
-      AutoRoute(page: UserRoute.page, path: UserPage.ROUTE),
-      AutoRoute(page: ScheduleNavigationRoute.page, path: EventPage.ROUTE, children: [
-                  AutoRoute(page: ScheduleRoute.page, path: "", initial: true),
-                  AutoRoute(page: EventRoute.page, path: ":id")
-                  ]),
-      AutoRoute(page: NewsRoute.page, path: NewsPage.ROUTE, maintainState: false),
-      AutoRoute(page: MapRoute.page, path: MapPage.ROUTE, maintainState: false, children: [
-        AutoRoute(path: ':id', page: MapRoute.page,),
-      ]),
-      AutoRoute(page: InfoRoute.page, path: InfoPage.ROUTE, children: [
-        AutoRoute(
-          path: ':id',
-          page: InfoRoute.page,
-        ),
-      ]),
-    ]),
-
-    RedirectRoute(path: '*', redirectTo: getDefaultLink()),
-  ];
+        AutoRoute(page: ResetPasswordRoute.page, path: sl(ResetPasswordPage.ROUTE)),
+        AutoRoute(page: ForgotPasswordRoute.page, path: sl(ForgotPasswordPage.ROUTE)),
+        AutoRoute(page: LoginRoute.page, path: sl(LoginPage.ROUTE)),
+        AutoRoute(page: SignupRoute.page, path: sl(SignupPage.ROUTE)),
+        AutoRoute(page: SettingsRoute.page, path: sl(SettingsPage.ROUTE)),
+        AutoRoute(page: InstallRoute.page, path: sl(InstallPage.ROUTE)),
+        AutoRoute(page: InstanceInstallRoute.page, path: sl(InstanceInstallPage.ROUTE)),
+        AutoRoute(page: UnitAdminRoute.page, path: "/${UnitPage.ROUTE}/:id/edit"),
+        AutoRoute(page: UnitRoute.page, path: "/${UnitPage.ROUTE}/:id"),
+        AutoRoute(page: ScanRoute.page, path: "/${ScanPage.ROUTE}", children: [
+          AutoRoute(
+            path: ':scanCode',
+            page: ScanRoute.page,
+          ),
+        ]),
+        AutoRoute(page: FormRoute.page, path: "/${FormPage.ROUTE}/:formLink"),
+        AutoRoute(page: FormEditRoute.page, path: "/${FormPage.ROUTE}/:formLink/edit"),
+        AutoRoute(page: CheckRoute.page, path: "/:$linkFormatted/${CheckPage.ROUTE}/:id"),
+        AutoRoute(page: NewsFormRoute.page, path: "/:$linkFormatted/${NewsFormPage.ROUTE}"),
+        AutoRoute(page: HtmlEditorRoute.page, path: "/:$linkFormatted/${HtmlEditorPage.ROUTE}"),
+        AutoRoute(page: AdminRoute.page, path: "/:$linkFormatted/${AdminPage.ROUTE}"),
+        AutoRoute(page: MyScheduleRoute.page, path: "/:$linkFormatted/${MySchedulePage.ROUTE}"),
+        AutoRoute(page: TimetableRoute.page, path: "/:$linkFormatted/${TimetablePage.ROUTE}"),
+        AutoRoute(page: GameRoute.page, path: "/:$linkFormatted/${GamePage.ROUTE}"),
+        AutoRoute(page: SongbookRoute.page, path: "/:$linkFormatted/${SongbookPage.ROUTE}"),
+        AutoRoute(page: EventEditRoute.page, path: "/:$linkFormatted/${EventEditPage.ROUTE}", children: [
+          AutoRoute(
+            path: ':id',
+            page: EventEditRoute.page,
+          ),
+        ]),
+        AutoRoute(page: OccasionHomeRoute.page, path: "/:$linkFormatted", children: [
+          AutoRoute(page: UserRoute.page, path: UserPage.ROUTE),
+          AutoRoute(page: ScheduleNavigationRoute.page, path: EventPage.ROUTE, children: [AutoRoute(page: ScheduleRoute.page, path: "", initial: true), AutoRoute(page: EventRoute.page, path: ":id")]),
+          AutoRoute(page: NewsRoute.page, path: NewsPage.ROUTE, maintainState: false),
+          AutoRoute(page: UnitRoute.page, path: UnitPage.ROUTE, maintainState: false),
+          AutoRoute(page: MapRoute.page, path: MapPage.ROUTE, children: [
+            AutoRoute(
+              path: ':id',
+              page: MapRoute.page,
+            ),
+          ]),
+          AutoRoute(page: InfoRoute.page, path: InfoPage.ROUTE, children: [
+            AutoRoute(
+              path: ':id',
+              page: InfoRoute.page,
+            ),
+          ]),
+        ]),
+        RedirectRoute(path: '*', redirectTo: getDefaultLink()),
+      ];
 
   static String getDefaultLink() {
+    if (RightsService.useOfflineVersion) {
+      return "/${RightsService.currentLink}";
+    }
+    if (RightsService.currentLink != null) {
+      return "/${RightsService.currentLink}";
+    }
 
-    if(RightsService.useOfflineVersion){
+    if (AppConfig.isAllUnit) {
       return "/${RightsService.currentLink}";
     }
-    if(RightsService.currentLink != null){
-      return "/${RightsService.currentLink}";
-    }
-    return "/${UnitPage.ROUTE}/${RightsService.currentUnit?.id??1}";
+
+    return "/${UnitPage.ROUTE}/${RightsService.currentUnit?.id ?? 1}";
   }
 
   static void Function()? regenerateRoutes;
@@ -118,7 +129,7 @@ class AppRouter extends RootStackRouter {
 }
 
 /// Observer to monitor routing events for debugging or analytics purposes.
-class RoutingObserver extends AutoRouterObserver {
+class RoutingObserver extends AutoRouteObserver {
   @override
   void didPush(Route route, Route? previousRoute) {
     debugPrint('New route pushed: ${route.settings.name}');

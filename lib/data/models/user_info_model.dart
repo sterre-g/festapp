@@ -57,87 +57,86 @@ class UserInfoModel extends IHasId {
   static const sexes = ["male", "female", ""];
 
   UserInfoModel({
-     this.id,
-     this.email,
-     this.name,
-     this.surname,
-     this.sex,
-     this.birthDate,
-     this.role,
-     this.isAdmin,
-     this.isEditor,
-     this.phone,
-     this.accommodationPlace,
-     this.eventUserGroup,
-     this.occasionUser,
-     this.roleString,
-     this.companions,
-     this.companionParent,
-     this.units,
-     this.eventIds,
-     this.userGroups,
+    this.id,
+    this.email,
+    this.name,
+    this.surname,
+    this.sex,
+    this.birthDate,
+    this.role,
+    this.isAdmin,
+    this.isEditor,
+    this.phone,
+    this.accommodationPlace,
+    this.eventUserGroup,
+    this.occasionUser,
+    this.roleString,
+    this.companions,
+    this.companionParent,
+    this.units,
+    this.eventIds,
+    this.userGroups,
   });
 
   static UserInfoModel fromJson(Map<String, dynamic> json) {
     return UserInfoModel(
       id: json[idColumn],
       //todo remove backward compatibility
-      email: json[emailReadonlyColumn]??json[Tb.user_info.data]?[Tb.occasion_users.data_email]??json["email"],
+      email: json[emailReadonlyColumn] ?? json[Tb.user_info.data]?[Tb.occasion_users.data_email] ?? json["email"],
       name: json[nameColumn],
       surname: json[surnameColumn],
-      accommodationPlace: json[placeColumn]!=null?PlaceModel.fromJson(json[placeColumn]):null,
-      eventUserGroup: json[userGroupColumn]!=null?UserGroupInfoModel.fromJson(json[userGroupColumn]):null,
-      occasionUser: json[occasionUserColumn]!=null?OccasionUserModel.fromJson(json[occasionUserColumn]):null,
+      accommodationPlace: json[placeColumn] != null ? PlaceModel.fromJson(json[placeColumn]) : null,
+      eventUserGroup: json[userGroupColumn] != null ? UserGroupInfoModel.fromJson(json[userGroupColumn]) : null,
+      occasionUser: json[occasionUserColumn] != null ? OccasionUserModel.fromJson(json[occasionUserColumn]) : null,
       roleString: json[roleStringColumn],
-      companions: json[userCompanionsColumn] != null ? List<CompanionModel>.from(json[userCompanionsColumn]!.map((c)=>CompanionModel.fromJson(c))) : null,
-      companionParent: json[companionParentColumn] != null ? UserInfoModel.fromJson(json[companionParentColumn]):null,
-      units: json[unitsField] != null ? List<UnitModel>.from(json[unitsField].map((u)=>UnitModel.fromJson(u))) : null,
-      eventIds: json[scheduleColumn] != null ? List<String>.from(json[scheduleColumn]!.map((s)=>s)) : null,
+      companions: json[userCompanionsColumn] != null ? List<CompanionModel>.from(json[userCompanionsColumn]!.map((c) => CompanionModel.fromJson(c))) : null,
+      companionParent: json[companionParentColumn] != null ? UserInfoModel.fromJson(json[companionParentColumn]) : null,
+      units: json[unitsField] != null ? List<UnitModel>.from(json[unitsField].map((u) => UnitModel.fromJson(u))) : null,
+      eventIds: json[scheduleColumn] != null ? List<String>.from(json[scheduleColumn]!.map((s) => s)) : null,
       sex: json[sexColumn],
       //todo remove
-      birthDate: (json.containsKey(birthDateColumn) && json[birthDateColumn]!=null) ? DateTime.parse(json[birthDateColumn]) : DateTime.fromMicrosecondsSinceEpoch(0),
+      birthDate: (json.containsKey(birthDateColumn) && json[birthDateColumn] != null) ? DateTime.parse(json[birthDateColumn]) : DateTime.fromMicrosecondsSinceEpoch(0),
     );
   }
 
-  Map toJson() =>
-  {
-    idColumn: id,
-    emailReadonlyColumn: email,
-    nameColumn: name,
-    surnameColumn: surname,
-    phoneColumn: phone,
-    roleColumn: role,
-    placeColumn: accommodationPlace?.toJson(),
-    userGroupColumn: eventUserGroup?.toJson(),
-    occasionUserColumn: occasionUser?.toUpdateJson(),
-    roleStringColumn: roleString,
-    sexColumn: sex,
-    birthDateColumn: DateFormat(birthDateJsonFormat).format(birthDate??DateTime.fromMicrosecondsSinceEpoch(0)),
-    userCompanionsColumn: companions != null ? List<dynamic>.from(companions!.map((c)=>c.toJson())) : null,
-  };
+  Map toJson() => {
+        idColumn: id,
+        emailReadonlyColumn: email,
+        nameColumn: name,
+        surnameColumn: surname,
+        phoneColumn: phone,
+        roleColumn: role,
+        placeColumn: accommodationPlace?.toJson(),
+        userGroupColumn: eventUserGroup?.toJson(),
+        occasionUserColumn: occasionUser?.toUpdateJson(),
+        roleStringColumn: roleString,
+        sexColumn: sex,
+        birthDateColumn: DateFormat(birthDateJsonFormat).format(birthDate ?? DateTime.fromMicrosecondsSinceEpoch(0)),
+        userCompanionsColumn: companions != null ? List<dynamic>.from(companions!.map((c) => c.toJson())) : null,
+      };
 
   @override
   String toString() => toFullNameString();
 
   String toFullNameString() {
-    if(companionParent!=null){
-      return (name??"") + (" (${"Companion of".tr()}: ${companionParent!.toFullNameString()})");
+    if (companionParent != null) {
+      return (name ?? "") + (" (${"Companion of".tr()}: ${companionParent!.toFullNameString()})");
     }
-    return "${name??""} ${surname??""}".trim();
+    return "${name ?? ""} ${surname ?? ""}".trim();
   }
 
   String shortNameToString() {
-    return "$name ${(surname!=null && surname!.isNotEmpty) ? "${surname![0]}." : "-"}";
+    return "$name ${(surname != null && surname!.isNotEmpty) ? "${surname![0]}." : "-"}";
   }
 
   bool hasGroup() => eventUserGroup != null;
 
-  UserGroupInfoModel? get getGameUserGroup => userGroups?.firstWhereOrNull((g)=>g.type == InformationModel.gameType);
+  UserGroupInfoModel? get getGameUserGroup => userGroups?.firstWhereOrNull((g) => g.type == InformationModel.gameType);
 
   bool isSignedIn = false;
 
   List<UnitModel> getUnitsWithEditorAccess() {
-    return units?.where((u)=>u.unitUser?.isEditorView == true).toList() ?? [];
+    return units?.where((u) => u.unitUser?.isEditorView == true).toList() ?? [];
   }
 
   static String sexToLocale(String? sx) {
@@ -155,11 +154,10 @@ class UserInfoModel extends IHasId {
     return id.hashCode;
   }
 
-  @override bool operator ==(Object other) {
-    if(other is UserInfoModel)
-    {
-      if(id==null && other.id==null)
-      {
+  @override
+  bool operator ==(Object other) {
+    if (other is UserInfoModel) {
+      if (id == null && other.id == null) {
         return false;
       }
       return id == other.id;
@@ -168,6 +166,6 @@ class UserInfoModel extends IHasId {
   }
 
   String getGenderPrefix() {
-    return sex == "female" ? "F":"M";
+    return sex == "female" ? "F" : "M";
   }
 }

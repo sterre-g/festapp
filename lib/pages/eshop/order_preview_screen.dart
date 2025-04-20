@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fstapp/data/models/form_option_model.dart';
+import 'package:fstapp/data/models/form_option_product_model.dart';
 import 'package:fstapp/pages/form/widgets_view/form_helper.dart';
 import 'package:fstapp/pages/form/widgets_view/option_field_helper.dart';
 import 'package:fstapp/services/utilities_all.dart';
@@ -179,7 +180,7 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
 
   Widget _buildTicketsSection(BuildContext context) {
     final ticketHolder = widget.formHolder.fields.firstWhere(
-          (field) => field.fieldType == FormHelper.fieldTypeTicket,
+      (field) => field.fieldType == FormHelper.fieldTypeTicket,
     ) as TicketHolder;
 
     return Column(
@@ -190,9 +191,7 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
         final List<Widget> ticketInfoRows = [];
 
         ticketInfoRows.add(Text(
-          ticketHolder.tickets.length > 1
-              ? "${"Ticket".tr()} $ticketIndex"
-              : "Ticket".tr(),
+          ticketHolder.tickets.length > 1 ? "${"Ticket".tr()} $ticketIndex" : "Ticket".tr(),
           style: StylesConfig.textStyleBig.copyWith(
             fontSize: 16 * OrderPreviewScreen.fontSizeFactor,
             fontWeight: FontWeight.bold,
@@ -216,10 +215,18 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
           String s;
           var value = entry.getValue(ticket.ticketKey);
           if (value is FormOptionModel) {
-            s = OptionFieldHelper.buildOptionTitle(
-                context, entry.getValue(ticket.ticketKey));
+            s = OptionFieldHelper.buildOptionTitle(context, entry.getValue(ticket.ticketKey));
           } else {
-            s = value.toString();
+            if (value is Iterable && value.isNotEmpty && value.first is FormOptionProductModel) {
+              var sectionPrice = 0.0;
+              var products = List<FormOptionProductModel>.from(value);
+              sectionPrice += products.fold(0, (sum, product) => sum + product.price);
+              s = "$value (${Utilities.formatPrice(context, sectionPrice, currencyCode: widget.formHolder.controller!.currencyCode)})";
+            } else if (value.isEmpty) {
+              s = "";
+            } else {
+              s = value.toString();
+            }
           }
           return _buildInfoRow(context, entry.title!, s, entry.fieldType);
         }).toList();
@@ -274,7 +281,7 @@ class _OrderPreviewScreenState extends State<OrderPreviewScreen> {
     return Center(
       child: Text(
         "Total Price: {price}".tr(namedArgs: {
-          "price": Utilities.formatPrice(context, widget.totalPrice),
+          "price": Utilities.formatPrice(context, widget.totalPrice, currencyCode: widget.formHolder.controller!.currencyCode),
         }),
         style: StylesConfig.textStyleBig.copyWith(
           fontSize: 16 * OrderPreviewScreen.fontSizeFactor,

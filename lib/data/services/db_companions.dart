@@ -11,22 +11,17 @@ class DbCompanions {
   static final _supabase = Supabase.instance.client;
 
   static Future<List<CompanionModel>> getAllCompanions() async {
-    var data = await _supabase
-        .rpc("get_user_companions_data");
-    var companions = List<CompanionModel>.from(
-        data["data"].map((x) => CompanionModel.fromJson(x)));
+    var data = await _supabase.rpc("get_user_companions_data");
+    var companions = List<CompanionModel>.from(data["data"].map((x) => CompanionModel.fromJson(x)));
     return companions;
   }
 
-  static Future<void> signIn(
-      BuildContext context, int eventId, CompanionModel companion) async {
-    await DbEvents.signInToEvent(context, eventId,
-        UserInfoModel(name: companion.name, id: companion.id));
+  static Future<void> signIn(BuildContext context, int eventId, CompanionModel companion) async {
+    await DbEvents.signInToEvent(context, eventId, UserInfoModel(name: companion.name, id: companion.id));
   }
 
   static Future<void> signOut(BuildContext context, int eventId, CompanionModel companion) async {
-    await DbEvents.signOutFromEvent(
-        context, eventId, UserInfoModel(name: companion.name, id: companion.id));
+    await DbEvents.signOutFromEvent(context, eventId, UserInfoModel(name: companion.name, id: companion.id));
   }
 
   static Future<void> create(String name) async {

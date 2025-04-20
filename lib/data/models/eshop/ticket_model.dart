@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:fstapp/components/single_data_grid/pluto_abstract.dart';
 import 'package:fstapp/data/models/eshop/tb_eshop.dart';
 import 'package:fstapp/data/services/eshop/db_tickets.dart';
+import 'package:fstapp/pages/eshop/eshop_columns.dart';
 import 'package:fstapp/services/utilities_all.dart';
 import 'package:trina_grid/trina_grid.dart';
 import 'order_model.dart';
@@ -31,7 +32,6 @@ class TicketModel extends ITrinaRowModel {
   static const String metaRelatedOrder = "related_order";
   static const String metaTicketsProducts = "ticket_products";
   static const String metaPrice = "price";
-  static const String metaSpot = "spot";
 
   TicketModel({
     this.id,
@@ -50,12 +50,8 @@ class TicketModel extends ITrinaRowModel {
   factory TicketModel.fromJson(Map<String, dynamic> json) {
     return TicketModel(
       id: json[TbEshop.tickets.id],
-      createdAt: json[TbEshop.tickets.created_at] != null
-          ? DateTime.parse(json[TbEshop.tickets.created_at])
-          : null,
-      updatedAt: json[TbEshop.tickets.updated_at] != null
-          ? DateTime.parse(json[TbEshop.tickets.updated_at])
-          : null,
+      createdAt: json[TbEshop.tickets.created_at] != null ? DateTime.parse(json[TbEshop.tickets.created_at]) : null,
+      updatedAt: json[TbEshop.tickets.updated_at] != null ? DateTime.parse(json[TbEshop.tickets.updated_at]) : null,
       ticketSymbol: json[TbEshop.tickets.ticket_symbol],
       state: json[TbEshop.tickets.state],
       occasion: json[TbEshop.tickets.occasion],
@@ -65,47 +61,33 @@ class TicketModel extends ITrinaRowModel {
   }
 
   Map<String, dynamic> toJson() => {
-    TbEshop.tickets.state: state,
-    TbEshop.tickets.note_hidden: noteHidden,
-  };
+        TbEshop.tickets.state: state,
+        TbEshop.tickets.note_hidden: noteHidden,
+      };
 
   @override
   TrinaRow toTrinaRow(BuildContext context) {
-    return TrinaRow(cells: {
+    Map<String, TrinaCell> cells = {
       TbEshop.tickets.id: TrinaCell(value: id ?? 0),
-      TbEshop.tickets.created_at: TrinaCell(
-          value: createdAt != null
-              ? DateFormat('yyyy-MM-dd').format(createdAt!)
-              : ""),
+      TbEshop.tickets.created_at: TrinaCell(value: createdAt != null ? DateFormat('yyyy-MM-dd').format(createdAt!) : ""),
       TbEshop.tickets.ticket_symbol: TrinaCell(value: ticketSymbol ?? ""),
       TbEshop.tickets.state: TrinaCell(value: OrderModel.formatState(state ?? OrderModel.orderedState)),
       TbEshop.tickets.note: TrinaCell(value: note ?? ""),
       TbEshop.tickets.note_hidden: TrinaCell(value: noteHidden ?? ""),
-      TbEshop.orders.order_symbol: TrinaCell(
-          value: relatedOrder != null
-              ? relatedOrder!.toBasicString()
-              : ""),
-      TbEshop.orders.data: TrinaCell(
-          value: relatedOrder != null
-              ? relatedOrder!.toCustomerData()
-              : ""),
-      metaTicketsProducts: TrinaCell(
-          value: relatedProducts != null
-              ? relatedProducts!.map((p)=>p.toBasicString()).join(" | ")
-              : ""),
-      metaSpot: TrinaCell(
-          value: relatedSpot != null
-              ? relatedSpot?.toShortString()
-              : ""),
+      TbEshop.orders.order_symbol: TrinaCell(value: relatedOrder != null ? relatedOrder!.toBasicString() : ""),
+      TbEshop.orders.data: TrinaCell(value: relatedOrder != null ? relatedOrder!.toCustomerData() : ""),
+      metaTicketsProducts: TrinaCell(value: relatedProducts != null ? relatedProducts!.map((p) => p.toBasicString()).join(" | ") : ""),
+      EshopColumns.TICKET_SPOT: TrinaCell(value: relatedSpot != null ? relatedSpot?.toShortString() : ""),
       metaPrice: TrinaCell(value: totalPrice != null ? Utilities.formatPrice(context, totalPrice!) : ""),
-    });
+    };
+
+    final productCells = EshopColumns.generateProductTypeCells(relatedOrder!.relatedProducts ?? []);
+    cells.addAll(productCells);
+    return TrinaRow(cells: cells);
   }
 
   static TicketModel fromPlutoJson(Map<String, dynamic> json) {
-    return TicketModel(
-        id: json[TbEshop.tickets.id] == -1 ? null : json[TbEshop.tickets.id],
-        noteHidden: json[TbEshop.tickets.note_hidden]
-    );
+    return TicketModel(id: json[TbEshop.tickets.id] == -1 ? null : json[TbEshop.tickets.id], noteHidden: json[TbEshop.tickets.note_hidden]);
   }
 
   @override
