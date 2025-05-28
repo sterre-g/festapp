@@ -1,0 +1,1 @@
+Text widgets: ensure each has a proper label.
